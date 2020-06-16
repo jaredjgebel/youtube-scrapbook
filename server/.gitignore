@@ -105,3 +105,6 @@ dist
 
 # Notes
 notes/
+
+# TypeORM Configuration
+.ormconfig.js
