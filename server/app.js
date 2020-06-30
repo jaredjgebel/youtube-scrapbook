@@ -32,10 +32,6 @@ db.once("open", function () {
   console.log("Database has been successfully connected.");
 });
 
-// mongoose.connect(process.env.MONGODB_URI, function () {
-//   console.log("Connected to database");
-// });
-
 let args;
 process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
 
