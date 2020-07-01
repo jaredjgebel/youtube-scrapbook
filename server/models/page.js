@@ -3,7 +3,11 @@ const videoSchema = require("./video");
 
 const pageSchema = mongoose.Schema({
   number: Number,
-  videos: [videoSchema],
+  videos: {
+    required: true,
+    default: [],
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model("Page", pageSchema);

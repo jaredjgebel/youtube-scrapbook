@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 
 const videoSchema = new mongoose.Schema({
   id: Number,
-  link: String,
+  link: {
+    type: String,
+    required: true,
+  },
   notes: String,
 });
 

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bookSchema = require("./bookSchema");
+const bookSchema = require("./book");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -11,7 +11,11 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   email: String,
-  books: [bookSchema],
+  books: {
+    required: true,
+    default: [new bookSchema()],
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
