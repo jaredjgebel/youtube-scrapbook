@@ -4,9 +4,13 @@ const videoSchema = require("./video");
 const pageSchema = mongoose.Schema({
   number: Number,
   videos: {
-    required: true,
     default: [],
     type: Array,
+    validate: {
+      validator: function () {
+        return this.videos.length <= 2;
+      },
+    },
   },
 });
 

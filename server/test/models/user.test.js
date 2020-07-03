@@ -1,7 +1,3 @@
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname + "../../../.env") });
-// require("./dbHelper");
-
 const expect = require("chai").expect;
 const faker = require("faker");
 const User = require("../../models/user");

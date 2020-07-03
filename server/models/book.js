@@ -9,7 +9,12 @@ const bookSchema = mongoose.Schema({
   pages: {
     type: Array,
     required: true,
-    default: [new pageSchema({})],
+    default: [new pageSchema({ number: 1 })],
+    validate: {
+      validator: function () {
+        return this.pages.length <= 100;
+      },
+    },
   },
 });
 
