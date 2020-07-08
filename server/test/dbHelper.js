@@ -1,11 +1,14 @@
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname + "../../../.env") });
+require("dotenv").config({ path: path.join(__dirname + "/../.env") });
+
+console.log(path.join(__dirname + "/../.env"));
 const mongoose = require("mongoose");
 
 before((done) => {
   mongoose.connect(process.env.MONGODB_URI_TEST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   });
 
   mongoose.connection
