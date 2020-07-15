@@ -5,7 +5,6 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,8 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api/v1/", indexRouter);
 
 const db = mongoose.connection;
 mongoose.connect(process.env.MONGODB_URI, {

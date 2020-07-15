@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { getUser } = require("../database/userdb");
+const getUserMiddleware = require("../middleware/getUserMiddleware");
 
-/* GET home page. */
-router.get("/", async function (req, res, next) {
-  res.send("placeholder");
+router.get("/:id", getUserMiddleware, async function (req, res, next) {
+  console.log("req.user", req.user);
+  return res.status(200).json("jlkj");
 });
 
 module.exports = router;
