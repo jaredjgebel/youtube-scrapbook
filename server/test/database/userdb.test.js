@@ -32,6 +32,16 @@ describe("User model database interface", async () => {
     expect(user.email).to.equal(userOneDetails.email);
   });
 
+  it("should throw an error if an incorrect ID is passed", async () => {
+    try {
+      const user = await getUser("NOT_A_VALID_ID");
+      return user; // shouldn't run
+    } catch (err) {
+      expect(err).to.haveOwnProperty("message");
+      expect(err).to.haveOwnProperty("stack");
+    }
+  });
+
   it("should create a new user with the given data", async () => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
