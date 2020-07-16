@@ -1,4 +1,5 @@
 const { getUser } = require("../database/userdb");
+
 const getUserMiddleware = async (req, res, next) => {
   let user;
 
@@ -8,10 +9,10 @@ const getUserMiddleware = async (req, res, next) => {
     if (!user.id) {
       return res
         .status(404)
-        .JSON({ message: "Cannot find user with given id" });
+        .json({ message: "Cannot find user with given id" });
     }
   } catch (err) {
-    return res.status(500).JSON({ error: err.message });
+    return res.status(500).json("Internal database error");
   }
 
   req.user = user;

@@ -5,7 +5,7 @@ async function getUser(id) {
     const user = await User.findById(id);
     return user;
   } catch (err) {
-    throw new Error(err);
+    return err;
   }
 }
 
@@ -13,7 +13,7 @@ async function createUser({ firstName, lastName, email }) {
   try {
     return await User.create({ firstName, lastName, email });
   } catch (err) {
-    console.log(err._message);
+    return err;
   }
 }
 
@@ -25,7 +25,7 @@ async function editUser({ id, firstName, lastName, email }) {
       { new: true }
     );
   } catch (err) {
-    console.log(err._message);
+    return err;
   }
 }
 
@@ -33,7 +33,7 @@ async function deleteUser(id) {
   try {
     return await User.findOneAndDelete({ _id: id });
   } catch (err) {
-    console.log(err);
+    return err;
   }
 }
 
