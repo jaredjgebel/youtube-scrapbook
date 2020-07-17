@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, editUser } = require("../database/userdb");
+const { createUser, editUser, deleteUser } = require("../database/userdb");
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 
 router.get("/users/:id", getUserMiddleware, function (req, res) {
@@ -43,6 +43,22 @@ router.patch("/users/:id", getUserMiddleware, async function (req, res) {
     }
 
     return res.status(200).json({ user: userPatchResponse });
+  } catch (error) {
+    const response = res.status(500).json({ error: error.message });
+
+    return response;
+  }
+});
+
+router.delete("/users/:id", getUserMiddleware, async function (req, res) {
+  try {
+    const userDeleteResponse = await deleteUser(req.user.id);
+
+    if (userDeleteResponse.errors) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(200).json({ user: userDeleteResponse });
   } catch (error) {
     const response = res.status(500).json({ error: error.message });
 
