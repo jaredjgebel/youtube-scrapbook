@@ -6,7 +6,7 @@ const getUserMiddleware = async (req, res, next) => {
   try {
     user = await getUser(req.params.id);
 
-    if (!user.id) {
+    if (!user) {
       return res
         .status(404)
         .json({ message: "Cannot find user with given id" });
