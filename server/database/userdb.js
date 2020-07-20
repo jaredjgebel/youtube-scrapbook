@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 async function getUser(id) {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).exec();
     return user;
   } catch (err) {
     return err;

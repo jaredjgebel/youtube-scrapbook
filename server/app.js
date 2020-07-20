@@ -4,7 +4,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
-const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const booksRouter = require("./routes/books");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/api/v1/", indexRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/users", booksRouter);
 
 const db = mongoose.connection;
 mongoose.connect(process.env.MONGODB_URI, {

@@ -3,11 +3,11 @@ const router = express.Router();
 const { createUser, editUser, deleteUser } = require("../database/userdb");
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 
-router.get("/users/:id", getUserMiddleware, function (req, res) {
+router.get("/:id", getUserMiddleware, function (req, res) {
   return res.status(200).json({ user: req.user });
 });
 
-router.post("/users", async function (req, res) {
+router.post("/", async function (req, res) {
   const user = {
     firstName: req.query.first,
     lastName: req.query.last,
@@ -27,7 +27,7 @@ router.post("/users", async function (req, res) {
   }
 });
 
-router.patch("/users/:id", getUserMiddleware, async function (req, res) {
+router.patch("/:id", getUserMiddleware, async function (req, res) {
   const editedUser = {
     id: req.user.id,
     firstName: req.query.first || req.user.firstName,
@@ -37,6 +37,7 @@ router.patch("/users/:id", getUserMiddleware, async function (req, res) {
 
   try {
     const userPatchResponse = await editUser(editedUser);
+    console.log(req.user);
 
     if (userPatchResponse.errors) {
       return res.status(400).json({ error: userPatchResponse.errors });
@@ -50,7 +51,7 @@ router.patch("/users/:id", getUserMiddleware, async function (req, res) {
   }
 });
 
-router.delete("/users/:id", getUserMiddleware, async function (req, res) {
+router.delete("/:id", getUserMiddleware, async function (req, res) {
   try {
     const userDeleteResponse = await deleteUser(req.user.id);
 
