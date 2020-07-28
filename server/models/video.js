@@ -9,7 +9,7 @@ const videoSchema = new mongoose.Schema({
       validator: function (v) {
         return youtubeRegex.test(v);
       },
-      message: (props) => `${props.value} is not a valid email address`,
+      message: (props) => `${props.value} is not a valid youtube link`,
     },
   },
   notes: String,

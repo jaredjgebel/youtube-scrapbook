@@ -18,4 +18,6 @@ const bookSchema = mongoose.Schema({
   },
 });
 
+// bookSchema.set("toObject", { getters: true });
+
 module.exports = mongoose.model("Book", bookSchema);

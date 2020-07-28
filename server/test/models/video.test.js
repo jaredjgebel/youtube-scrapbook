@@ -1,5 +1,4 @@
 const expect = require("chai").expect;
-const faker = require("faker");
 const Video = require("../../models/video");
 
 describe("Video model", () => {

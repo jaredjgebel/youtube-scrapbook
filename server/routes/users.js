@@ -18,7 +18,7 @@ router.post("/", async function (req, res) {
     const userPostResponse = await createUser(user);
 
     if (userPostResponse.errors) {
-      return res.status(400).json({ error: userPostResponse.errors });
+      return res.status(400).json({ error: userPostResponse.errors.message });
     }
 
     return res.status(200).json({ user: userPostResponse });
@@ -37,17 +37,14 @@ router.patch("/:id", getUserMiddleware, async function (req, res) {
 
   try {
     const userPatchResponse = await editUser(editedUser);
-    console.log(req.user);
-
+    s;
     if (userPatchResponse.errors) {
-      return res.status(400).json({ error: userPatchResponse.errors });
+      return res.status(400).json({ error: userPatchResponse.errors.message });
     }
 
     return res.status(200).json({ user: userPatchResponse });
   } catch (error) {
-    const response = res.status(500).json({ error: error.message });
-
-    return response;
+    return res.status(500).json({ error: error.message });
   }
 });
 

@@ -18,4 +18,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// userSchema.set("toObject", { getters: true });
+
 module.exports = mongoose.model("User", userSchema);

@@ -14,9 +14,32 @@ async function createBook({ userId, title = "" }) {
   }
 }
 
-async function editBook({ id, title }) {}
+async function editBook({ userId, bookId, title }) {
+  try {
+    const user = await User.findById(userId);
 
-async function deleteBook({ id }) {}
+    const [bookToUpdate] = user.books.filter(
+      (book) => book._id.toString() === bookId
+    );
+
+    const index = user.books.indexOf(bookToUpdate);
+
+    user.books[index] = { ...bookToUpdate, title };
+    const response = await user.save();
+
+    return response;
+  } catch (err) {
+    return err;
+  }
+}
+
+async function deleteBook(id) {
+  try {
+    return await Book.findByIdAndDelete({ _id: id });
+  } catch (err) {
+    return err;
+  }
+}
 
 module.exports = {
   createBook,
