@@ -18,13 +18,12 @@ async function editBook({ userId, bookId, title }) {
   try {
     const user = await User.findById(userId);
 
-    const [bookToUpdate] = user.books.filter(
-      (book) => book._id.toString() === bookId
-    );
+    const [bookToUpdate] = user.books.filter((book) => book._id.equals(bookId));
 
     const index = user.books.indexOf(bookToUpdate);
 
     user.books[index] = { ...bookToUpdate, title };
+
     const response = await user.save();
 
     return response;

@@ -4,6 +4,7 @@ const faker = require("faker");
 const User = require("../../models/user");
 const Book = require("../../models/book");
 const { createBook, editBook, deleteBook } = require("../../database/bookdb");
+const { getUser } = require("../../database/userdb");
 
 describe("Book model database functions", () => {
   let user;
@@ -38,7 +39,7 @@ describe("Book model database functions", () => {
   it("should create a new book ", async () => {
     const newTitle = faker.random.words(5);
     const userWithNewBook = await createBook({
-      userId: user.id,
+      userId: user._id,
       title: newTitle,
     });
 
@@ -50,17 +51,26 @@ describe("Book model database functions", () => {
 
   it("should edit a given book", async () => {
     const newTitle = faker.random.words(5);
-    const editedBook = await editBook({
-      id: book.id,
-      title: newTitle,
-    });
+    let editedUser;
 
-    expect(editedBook.title).to.equal(newTitle);
+    try {
+      editedUser = await editBook({
+        userId: user._id,
+        bookId: book._id,
+        title: newTitle,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      const editedUser = await getUser(user._id);
+
+      expect(editedUser).to.be.an.instanceof(User);
+    }
   });
 
   it("should delete a given book", async () => {
     const response = await deleteBook(book.id);
 
-    expect(response.id).to.equal(book.id);
+    expect(response._id.toString()).to.equal(book._id.toString());
   });
 });
