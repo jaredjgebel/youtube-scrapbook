@@ -1,4 +1,3 @@
-const User = require("../models/user");
 const Book = require("../models/book");
 const { getUser } = require("./userdb");
 
@@ -9,16 +8,16 @@ async function createBook({ userId, title = "" }) {
 
   try {
     return await user.save();
-  } catch {
-    throw new Error(err);
+  } catch (error) {
+    return error;
   }
 }
 
 async function editBook({ userId, bookId, title }) {
   try {
-    const user = await User.findById(userId);
+    const user = await getUser(userId);
 
-    const [bookToUpdate] = user.books.filter((book) => book._id.equals(bookId));
+    const bookToUpdate = user.books.find((book) => book._id.equals(bookId));
 
     const index = user.books.indexOf(bookToUpdate);
 
@@ -27,16 +26,26 @@ async function editBook({ userId, bookId, title }) {
     const response = await user.save();
 
     return response;
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 }
 
-async function deleteBook(id) {
+async function deleteBook(userId, bookId) {
   try {
-    return await Book.findByIdAndDelete({ _id: id });
-  } catch (err) {
-    return err;
+    const user = await getUser(userId);
+
+    const bookToDelete = user.books.find((book) => book._id.equals(bookId));
+
+    const index = user.books.indexOf(bookToDelete);
+
+    delete user.books[index];
+
+    const userWithDeletedBook = await user.save();
+
+    return userWithDeletedBook;
+  } catch (error) {
+    return error;
   }
 }
 

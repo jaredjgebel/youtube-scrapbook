@@ -23,13 +23,9 @@ describe("Book model database functions", () => {
 
     try {
       const response = await user.save();
-      const bookResponse = await book.save();
 
       if (response.errors) {
         throw new Error(response.errors.message);
-      }
-      if (bookResponse.errors) {
-        throw new Error(bookResponse.errors.message);
       }
     } catch (error) {
       throw new Error(error);
@@ -69,8 +65,8 @@ describe("Book model database functions", () => {
   });
 
   it("should delete a given book", async () => {
-    const response = await deleteBook(book.id);
+    const userWithDeletedBook = await deleteBook(user._id, book._id);
 
-    expect(response._id.toString()).to.equal(book._id.toString());
+    expect(userWithDeletedBook._id.toString()).to.equal(user._id.toString());
   });
 });

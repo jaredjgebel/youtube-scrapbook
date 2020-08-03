@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
-    "test": "npx mocha --watch ./test --recursive"
+    "test": "npx mocha ./test --recursive"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
