@@ -58,9 +58,7 @@ router.delete("/:id", getUserMiddleware, async function (req, res) {
 
     return res.status(200).json({ user: userDeleteResponse });
   } catch (error) {
-    const response = res.status(500).json({ error: error.message });
-
-    return response;
+    return res.status(500).json({ error: error.message });
   }
 });
 
