@@ -2,18 +2,17 @@ const User = require("../models/user");
 
 async function getUser(id) {
   try {
-    const user = await User.findById(id).exec();
-    return user;
-  } catch (err) {
-    return err;
+    return await User.findById(id).exec();
+  } catch (error) {
+    return error;
   }
 }
 
 async function createUser({ firstName, lastName, email }) {
   try {
     return await User.create({ firstName, lastName, email });
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 }
 
@@ -24,16 +23,16 @@ async function editUser({ id, firstName, lastName, email }) {
       { firstName, lastName, email },
       { new: true }
     );
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 }
 
 async function deleteUser(id) {
   try {
     return await User.findOneAndDelete({ _id: id });
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 }
 

@@ -1,45 +1,14 @@
-const Page = require("../models/page");
+const Video = require("../models/video");
 const { getUser } = require("./userdb");
 
-async function createPage({ userId, bookId, title }) {
-  try {
-    const user = await getUser(userId);
-    const book = user.books.find((book) => book._id.equals(bookId));
-    const page = new Page({ title, number: book.pages.length - 1 });
-
-    book.pages.push(page);
-
-    return await user.save();
-  } catch (error) {
-    return error;
-  }
-}
-
-async function editPage({ userId, bookId, pageId, title }) {
-  try {
-    const user = await getUser(userId);
-    if (!title) return user;
-
-    const book = user.books.find((book) => book._id.equals(bookId));
-    const page = book.pages.find((page) => page._id.equals(pageId));
-
-    page.title = title;
-
-    return await user.save();
-  } catch (error) {
-    return error;
-  }
-}
-
-async function deletePage({ userId, bookId, pageId }) {
+async function createVideo({ userId, bookId, pageId, link, notes }) {
   try {
     const user = await getUser(userId);
 
     const book = user.books.find((book) => book._id.equals(bookId));
     const page = book.pages.find((page) => page._id.equals(pageId));
-    const index = book.pages.indexOf(page);
 
-    book.pages = book.pages.slice(index, 1);
+    page.videos.push(new Video({ link, notes }));
 
     return await user.save();
   } catch (error) {
@@ -47,4 +16,43 @@ async function deletePage({ userId, bookId, pageId }) {
   }
 }
 
-module.exports = { createPage, editPage, deletePage };
+async function editVideo({ userId, bookId, pageId, videoId, link, notes }) {
+  try {
+    const user = await getUser(userId);
+
+    const book = user.books.find((book) => book._id.equals(bookId));
+    const page = book.pages.find((page) => page._id.equals(pageId));
+    const video = page.videos.find((page) => page._id.equals(videoId));
+
+    const index = page.videos.indexOf(video);
+
+    page.videos[index] = { ...video, link, notes };
+
+    return await user.save();
+  } catch (error) {
+    return error;
+  }
+}
+
+async function deleteVideo({ userId, bookId, pageId, videoId }) {
+  try {
+    const user = await getUser(userId);
+
+    const book = user.books.find((book) => book._id.equals(bookId));
+    const page = book.pages.find((page) => page._id.equals(pageId));
+    const video = page.videos.find((video) => video._id.equals(videoId));
+
+    const index = page.videos.indexOf(video);
+    delete video[index];
+
+    return await user.save();
+  } catch (error) {
+    return error;
+  }
+}
+
+module.exports = {
+  createVideo,
+  editVideo,
+  deleteVideo,
+};

@@ -55,18 +55,20 @@ describe("Book model database functions", () => {
         bookId: book._id,
         title: newTitle,
       });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      const editedUser = await getUser(user._id);
 
       expect(editedUser).to.be.an.instanceof(User);
+    } catch (error) {
+      throw new Error(error);
     }
   });
 
   it("should delete a given book", async () => {
-    const userWithDeletedBook = await deleteBook(user._id, book._id);
+    try {
+      const userWithDeletedBook = await deleteBook(user._id, book._id);
 
-    expect(userWithDeletedBook._id.toString()).to.equal(user._id.toString());
+      expect(userWithDeletedBook).to.be.an.instanceof(User);
+    } catch (error) {
+      throw new Error(error);
+    }
   });
 });

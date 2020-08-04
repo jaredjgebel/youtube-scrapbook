@@ -37,7 +37,7 @@ router.patch("/:id", getUserMiddleware, async function (req, res) {
 
   try {
     const userPatchResponse = await editUser(editedUser);
-    s;
+
     if (userPatchResponse.errors) {
       return res.status(400).json({ error: userPatchResponse.errors.message });
     }

@@ -35,7 +35,7 @@ describe("Page database interfaces", () => {
   });
 
   it("should create a new page for a given book in the database", async () => {
-    let userWithNewPage, bookWithNewPage, newPage;
+    let userWithNewPage, bookWithNewPage;
     const newTitle = faker.random.words(5);
 
     try {
@@ -74,7 +74,7 @@ describe("Page database interfaces", () => {
     expect(userWithEditedPage).to.be.an.instanceof(User);
   });
 
-  xit("should delete a given page in the database", async () => {
+  it("should delete a given page in the database", async () => {
     let userWithDeletedPage;
 
     try {
@@ -87,6 +87,6 @@ describe("Page database interfaces", () => {
       throw new Error(error);
     }
 
-    expect(userWithDeletedPage.to.be.an.instanceof(User));
+    expect(userWithDeletedPage).to.be.an.instanceof(User);
   });
 });

@@ -2,11 +2,11 @@ const Book = require("../models/book");
 const { getUser } = require("./userdb");
 
 async function createBook({ userId, title = "" }) {
-  const user = await getUser(userId);
-
-  user.books.push(new Book({ title }));
-
   try {
+    const user = await getUser(userId);
+
+    user.books.push(new Book({ title }));
+
     return await user.save();
   } catch (error) {
     return error;
@@ -23,9 +23,7 @@ async function editBook({ userId, bookId, title }) {
 
     user.books[index] = { ...bookToUpdate, title };
 
-    const response = await user.save();
-
-    return response;
+    return await user.save();
   } catch (error) {
     return error;
   }
@@ -41,9 +39,7 @@ async function deleteBook(userId, bookId) {
 
     delete user.books[index];
 
-    const userWithDeletedBook = await user.save();
-
-    return userWithDeletedBook;
+    return await user.save();
   } catch (error) {
     return error;
   }
