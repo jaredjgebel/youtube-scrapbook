@@ -59,6 +59,15 @@ describe("Book model database functions", () => {
       expect(editedUser).to.be.an.instanceof(User);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      const retrievedUser = await getUser(user._id);
+      const updatedBook = retrievedUser.books.find((updatedBook) =>
+        updatedBook._id.equals(book._id)
+      );
+
+      const bookIndex = retrievedUser.books.indexOf(updatedBook);
+
+      expect(retrievedUser.books[bookIndex].title).to.equal(newTitle);
     }
   });
 
@@ -69,6 +78,14 @@ describe("Book model database functions", () => {
       expect(userWithDeletedBook).to.be.an.instanceof(User);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      const persistedUser = await getUser(user._id);
+
+      const deletedBook = persistedUser.books.find((aBook) =>
+        aBook._id.equals(book._id)
+      );
+
+      expect(deletedBook).to.be.undefined;
     }
   });
 });

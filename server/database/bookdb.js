@@ -21,7 +21,7 @@ async function editBook({ userId, bookId, title }) {
 
     const index = user.books.indexOf(bookToUpdate);
 
-    user.books[index] = { ...bookToUpdate, title };
+    user.books.set(index, { ...bookToUpdate, title });
 
     return await user.save();
   } catch (error) {
@@ -37,7 +37,7 @@ async function deleteBook(userId, bookId) {
 
     const index = user.books.indexOf(bookToDelete);
 
-    delete user.books[index];
+    user.books = user.books.filter((book) => !book._id.equals(bookId));
 
     return await user.save();
   } catch (error) {

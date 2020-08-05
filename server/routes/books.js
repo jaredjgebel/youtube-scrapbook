@@ -7,7 +7,7 @@ router.get("/:id/books/:bookId", getUserMiddleware, function (req, res) {
   const user = req.user;
   const bookId = req.params.bookId;
 
-  const book = user.books.filter((book) => book._id.toString() === bookId);
+  const book = user.books.find((book) => book._id.toString() === bookId);
 
   return res.status(200).json({ book });
 });
@@ -57,4 +57,21 @@ router.patch("/:id/books/:bookId", getUserMiddleware, async function (
   }
 });
 
+router.delete("/:id/books/:bookId", getUserMiddleware, async function (
+  req,
+  res
+) {
+  const bookId = req.params.bookId;
+
+  try {
+    const deletedBook = await deleteBook(req.user._id, bookId);
+    if (deletedBook && deletedBook.errors) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(200).json({ book: deletedBook });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;
