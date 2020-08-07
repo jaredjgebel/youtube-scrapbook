@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bookSchema = require("./book");
+const bookSchema = require("./book").schema;
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -12,9 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   email: String,
   books: {
-    required: true,
-    default: [new bookSchema()],
-    type: Array,
+    type: [bookSchema],
   },
 });
 

@@ -11,6 +11,7 @@ const {
   deleteVideo,
 } = require("../../database/videodb");
 const { createPage } = require("../../database/pagedb");
+const { getUser } = require("../../database/userdb");
 
 describe("Video database interface", () => {
   let user, book, page, video;
@@ -23,12 +24,15 @@ describe("Video database interface", () => {
     });
 
     book = new Book({ title: faker.random.words(5) });
-    page = new Page({ title: faker.random.words(5) });
-    video = new Video({ link: "", notes: faker.lorem.sentences(3) });
+    page = new Page({ number: 4 });
+    video = new Video({
+      link: "https://www.youtube.com/watch?v=7Q17ubqLfaM",
+      notes: faker.lorem.sentences(3),
+    });
 
-    user.books.push(book);
-    book.pages.push(page);
     page.videos.push(video);
+    book.pages.push(page);
+    user.books.push(book);
 
     try {
       const userDocument = await user.save();
@@ -42,9 +46,9 @@ describe("Video database interface", () => {
   });
 
   it("should create a new video for a given page", async () => {
-    let userWithNewVideo, bookWithNewVideo, pageWithNewVideo;
+    let userWithNewVideo;
 
-    const link = "https://www.youtube.com/watch?v=fzI9FNjXQ0o";
+    const link = "https://www.youtube.com/watch?v=41GSinwoMYA";
     const notes = faker.lorem.sentences(3);
 
     try {
@@ -56,22 +60,20 @@ describe("Video database interface", () => {
         notes,
       });
 
-      bookWithNewVideo = userWithNewVideo.books.find((book) =>
-        book._id.equals(book._id)
-      );
-      pageWithNewVideo = bookWithNewVideo.pages.find((page) =>
-        page._id.equals(page._id)
-      );
-
       expect(userWithNewVideo).to.be.an.instanceof(User);
-      // if I expect to check the values, I'll need to re-request the user in a finally block
-      // expect(
-      //   pageWithNewVideo.videos.find(
-      //     (video) => video.link === link && video.notes === notes
-      //   )
-      // ).to.be.true;
     } catch (error) {
       throw new Error(error);
+    } finally {
+      const savedUser = await getUser(user._id);
+
+      expect(
+        savedUser.books
+          .id(book._id)
+          .pages.id(page._id)
+          .videos.filter(
+            (video) => video.link === link && video.notes === notes
+          ).length
+      ).to.equal(1);
     }
   });
 
@@ -93,6 +95,15 @@ describe("Video database interface", () => {
       expect(userWithEditedVideo).to.be.instanceOf(User);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      const savedUser = await getUser(user._id);
+      const savedVideo = savedUser.books
+        .id(book._id)
+        .pages.id(page._id)
+        .videos.id(video._id);
+
+      expect(savedVideo.link).to.equal(newLink);
+      expect(savedVideo.notes).to.equal(newNotes);
     }
   });
 
@@ -108,6 +119,14 @@ describe("Video database interface", () => {
       expect(userWithDeletedVideo).to.be.instanceOf(User);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      const savedUser = await getUser(user._id);
+      const deletedVideo = savedUser.books
+        .id(book._id)
+        .pages.id(page._id)
+        .videos.id(video._id);
+
+      expect(deletedVideo).to.be.null;
     }
   });
 });

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const pageSchema = require("./page");
+const pageSchema = require("./page").schema;
 
 const bookSchema = mongoose.Schema({
   title: {
@@ -7,9 +7,8 @@ const bookSchema = mongoose.Schema({
     default: "",
   },
   pages: {
-    type: Array,
+    type: [pageSchema],
     required: true,
-    default: [new pageSchema({ number: 1 })],
     validate: {
       validator: function () {
         return this.pages.length <= 100;

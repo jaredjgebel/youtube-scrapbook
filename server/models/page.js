@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const videoSchema = require("./video");
+const videoSchema = require("./video").schema;
 
 const pageSchema = mongoose.Schema({
   number: Number,
   videos: {
-    default: [],
-    type: Array,
+    type: [videoSchema],
     validate: {
       validator: function () {
         return this.videos.length <= 2;

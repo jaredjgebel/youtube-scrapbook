@@ -5,10 +5,10 @@ async function createVideo({ userId, bookId, pageId, link, notes }) {
   try {
     const user = await getUser(userId);
 
-    const book = user.books.find((book) => book._id.equals(bookId));
-    const page = book.pages.find((page) => page._id.equals(pageId));
-
-    page.videos.push(new Video({ link, notes }));
+    user.books
+      .id(bookId)
+      .pages.id(pageId)
+      .videos.push(new Video({ link, notes }));
 
     return await user.save();
   } catch (error) {
@@ -20,13 +20,10 @@ async function editVideo({ userId, bookId, pageId, videoId, link, notes }) {
   try {
     const user = await getUser(userId);
 
-    const book = user.books.find((book) => book._id.equals(bookId));
-    const page = book.pages.find((page) => page._id.equals(pageId));
-    const video = page.videos.find((page) => page._id.equals(videoId));
+    const video = user.books.id(bookId).pages.id(pageId).videos.id(videoId);
 
-    const index = page.videos.indexOf(video);
-
-    page.videos[index] = { ...video, link, notes };
+    video.link = link;
+    video.notes = notes;
 
     return await user.save();
   } catch (error) {
@@ -38,12 +35,9 @@ async function deleteVideo({ userId, bookId, pageId, videoId }) {
   try {
     const user = await getUser(userId);
 
-    const book = user.books.find((book) => book._id.equals(bookId));
-    const page = book.pages.find((page) => page._id.equals(pageId));
-    const video = page.videos.find((video) => video._id.equals(videoId));
+    const page = user.books.id(bookId).pages.id(pageId);
 
-    const index = page.videos.indexOf(video);
-    delete video[index];
+    page.videos = page.videos.filter((video) => !video._id.equals(videoId));
 
     return await user.save();
   } catch (error) {

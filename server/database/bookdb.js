@@ -18,10 +18,9 @@ async function editBook({ userId, bookId, title }) {
     const user = await getUser(userId);
 
     const bookToUpdate = user.books.find((book) => book._id.equals(bookId));
-
     const index = user.books.indexOf(bookToUpdate);
 
-    user.books.set(index, { ...bookToUpdate, title });
+    user.books[index].title = title;
 
     return await user.save();
   } catch (error) {
@@ -32,10 +31,6 @@ async function editBook({ userId, bookId, title }) {
 async function deleteBook(userId, bookId) {
   try {
     const user = await getUser(userId);
-
-    const bookToDelete = user.books.find((book) => book._id.equals(bookId));
-
-    const index = user.books.indexOf(bookToDelete);
 
     user.books = user.books.filter((book) => !book._id.equals(bookId));
 

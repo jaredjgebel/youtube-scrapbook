@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
+const pagesRouter = require("./routes/pages");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/users", booksRouter);
+app.use("/api/v1/users", pagesRouter);
 
 const db = mongoose.connection;
 mongoose.connect(process.env.MONGODB_URI, {
@@ -26,6 +28,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
+mongoose.set("debug", true);
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {

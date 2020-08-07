@@ -5,12 +5,12 @@ const videoSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
-    validate: {
-      validator: function (v) {
-        return youtubeRegex.test(v);
-      },
-      message: (props) => `${props.value} is not a valid youtube link`,
-    },
+    // validate: {
+    //   validator: function (v) {
+    //     return youtubeRegex.test(v);
+    //   },
+    //   message: (props) => `${props.value} is not a valid youtube link`,
+    // },
   },
   notes: String,
 });
