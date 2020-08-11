@@ -1,16 +1,16 @@
-const expect = require("chai").expect;
-const Video = require("../../models/video");
+const { expect } = require('chai');
+const Video = require('../../models/video');
 
-describe("Video model", () => {
-  it("must have a link to a YouTube video", async () => {
+describe('Video model', () => {
+  it('must have a link to a YouTube video', async () => {
     const video = new Video({
-      link: "https://someotherwebsite.com/video?k=sdkjfsldkf",
+      link: 'https://someotherwebsite.com/video?k=sdkjfsldkf',
     });
 
     try {
       await video.save();
     } catch (err) {
-      expect(err._message).to.equal("Video validation failed");
+      expect(err._message).to.equal('Video validation failed');
     }
   });
 });

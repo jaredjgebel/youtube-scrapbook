@@ -7,9 +7,9 @@ router.get("/:id/books/:bookId/pages/:pageId", getUserMiddleware, function (
   req,
   res
 ) {
-  const user = req.user;
-  const bookId = req.params.bookId;
-  const pageId = req.params.pageId;
+  const { user } = req;
+  const { bookId } = req.params;
+  const { pageId } = req.params;
 
   const book = user.books.find((book) => book._id.toString() === bookId);
   const page = book.pages.find((page) => page._id.toString() === pageId);
@@ -21,8 +21,8 @@ router.post("/:id/books/:bookId/pages", getUserMiddleware, async function (
   req,
   res
 ) {
-  const user = req.user;
-  const bookId = req.params.bookId;
+  const { user } = req;
+  const { bookId } = req.params;
   const title = (req.body && req.body.title) || "";
 
   try {
@@ -46,9 +46,9 @@ router.patch(
   "/:id/books/:bookId/pages/:pageId",
   getUserMiddleware,
   async function (req, res) {
-    const user = req.user;
-    const bookId = req.params.bookId,
-      pageId = req.params.pageId;
+    const { user } = req;
+    const { bookId } = req.params;
+    const { pageId } = req.params;
     const book = user.books.find((book) => book._id.toString() === bookId);
     const page = book.pages.find((page) => page._id.toString() === pageId);
 

@@ -1,14 +1,15 @@
 require("../dbHelper");
-const expect = require("chai").expect;
+const { expect } = require("chai");
 const faker = require("faker");
 const User = require("../../models/user");
 const Book = require("../../models/book");
-const Page = require("../../models/page");
 const { createPage, editPage, deletePage } = require("../../database/pagedb");
 const { getUser } = require("../../database/userdb");
 
 describe("Page database interfaces", () => {
-  let user, book, page;
+  let user;
+  let book;
+  let page;
 
   before(async () => {
     user = new User({

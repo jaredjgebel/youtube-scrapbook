@@ -1,6 +1,7 @@
+/* eslint-disable consistent-return */
 const { getUser } = require("../database/userdb");
 
-const getUserMiddleware = async (req, res, next) => {
+const getUserMiddleware = async function runUserMiddleware(req, res, next) {
   let user;
 
   try {

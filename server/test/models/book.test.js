@@ -1,5 +1,6 @@
-const expect = require("chai").expect;
-const faker = require("faker");
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-undef */
+const { expect } = require("chai");
 const Book = require("../../models/book");
 const Page = require("../../models/page");
 
@@ -22,6 +23,7 @@ describe("Book model", () => {
     });
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const saved = await book.save();
     } catch (err) {
       expect(err._message).to.equal("Book validation failed");

@@ -1,5 +1,5 @@
 require("../dbHelper");
-const expect = require("chai").expect;
+const { expect } = require("chai");
 const faker = require("faker");
 const User = require("../../models/user");
 const Book = require("../../models/book");
@@ -10,11 +10,13 @@ const {
   editVideo,
   deleteVideo,
 } = require("../../database/videodb");
-const { createPage } = require("../../database/pagedb");
 const { getUser } = require("../../database/userdb");
 
 describe("Video database interface", () => {
-  let user, book, page, video;
+  let user;
+  let book;
+  let page;
+  let video;
 
   before(async () => {
     user = new User({
@@ -71,7 +73,7 @@ describe("Video database interface", () => {
           .id(book._id)
           .pages.id(page._id)
           .videos.filter(
-            (video) => video.link === link && video.notes === notes
+            (aVideo) => aVideo.link === link && aVideo.notes === notes
           ).length
       ).to.equal(1);
     }

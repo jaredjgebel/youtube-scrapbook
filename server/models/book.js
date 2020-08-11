@@ -10,7 +10,7 @@ const bookSchema = mongoose.Schema({
     type: [pageSchema],
     required: true,
     validate: {
-      validator: function () {
+      validator: function isLessThan100Pages() {
         return this.pages.length <= 100;
       },
     },

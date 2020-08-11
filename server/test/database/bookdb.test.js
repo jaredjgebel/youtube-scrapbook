@@ -1,5 +1,5 @@
 require("../dbHelper");
-const expect = require("chai").expect;
+const { expect } = require("chai");
 const faker = require("faker");
 const User = require("../../models/user");
 const Book = require("../../models/book");
@@ -33,10 +33,10 @@ describe("Book model database functions", () => {
   });
 
   it("should create a new book ", async () => {
-    const title = faker.random.words(5);
+    const newTitle = faker.random.words(5);
     const userWithNewBook = await createBook({
       userId: user._id,
-      title: title,
+      title: newTitle,
     });
 
     // new book placed at final index (after default)
@@ -61,8 +61,8 @@ describe("Book model database functions", () => {
       throw new Error(error);
     } finally {
       const savedUser = await getUser(user._id);
-      const updatedBook = savedUser.books.find((updatedBook) =>
-        updatedBook._id.equals(book._id)
+      const updatedBook = savedUser.books.find((aBook) =>
+        aBook._id.equals(book._id)
       );
 
       const bookIndex = savedUser.books.indexOf(updatedBook);

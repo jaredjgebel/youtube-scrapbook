@@ -1,4 +1,5 @@
-const expect = require("chai").expect;
+/* eslint-disable no-undef */
+const { expect } = require("chai");
 const Page = require("../../models/page");
 const Video = require("../../models/video");
 
@@ -15,6 +16,7 @@ describe("Page model", () => {
     page.videos.push(...videos);
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const pageDoc = await page.save();
     } catch (err) {
       expect(err._message).to.equal("Page validation failed");

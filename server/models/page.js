@@ -6,7 +6,7 @@ const pageSchema = mongoose.Schema({
   videos: {
     type: [videoSchema],
     validate: {
-      validator: function () {
+      validator: function hasFewerThanTwoVideos() {
         return this.videos.length <= 2;
       },
     },

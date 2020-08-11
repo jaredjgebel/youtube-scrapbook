@@ -1,7 +1,7 @@
 {
   "name": "youtube-scrapbook",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "nodemon app.js",
     "test": "npx mocha ./test --recursive"
@@ -19,7 +19,13 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^8.0.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable prettier/prettier */
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -31,11 +33,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 mongoose.set("debug", true);
 
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
+db.once("open", function onDatabaseConnectionSuccess() {
   console.log("Database has been successfully connected.");
 });
 
 let args;
+// eslint-disable-next-line no-unused-expressions
 process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
 
 args.push(() => {
@@ -44,6 +47,7 @@ args.push(() => {
 
 // If file is being run directly, start the server
 if (require.main === module) {
+  // eslint-disable-next-line prefer-spread
   app.listen.apply(app, args);
 }
 

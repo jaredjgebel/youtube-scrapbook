@@ -1,5 +1,5 @@
 require("../dbHelper");
-const expect = require("chai").expect;
+const { expect } = require("chai");
 const faker = require("faker");
 const User = require("../../models/user");
 const {
