@@ -4,7 +4,7 @@ const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 const { createBook, editBook, deleteBook } = require("../database/bookdb");
 
-router.get("/:id/books/:bookId", getUserMiddleware, function runGetUser(
+router.get("/:id/books/:bookId", getUserMiddleware, function getBookRequest(
   req,
   res
 ) {
@@ -16,7 +16,10 @@ router.get("/:id/books/:bookId", getUserMiddleware, function runGetUser(
   return res.status(200).json({ book });
 });
 
-router.post("/:id/books", getUserMiddleware, async function postUser(req, res) {
+router.post("/:id/books", getUserMiddleware, async function postBookRequest(
+  req,
+  res
+) {
   const book = {
     userId: req.user._id,
     title: req.body.title || "",
@@ -35,36 +38,39 @@ router.post("/:id/books", getUserMiddleware, async function postUser(req, res) {
   }
 });
 
-router.patch("/:id/books/:bookId", getUserMiddleware, async function patchUser(
-  req,
-  res
-) {
-  const { user } = req;
-  const { bookId } = req.params;
-  const book = user.books.find((aBook) => aBook._id.toString() === bookId);
-  const title = (req.body && req.body.title) || book.title;
+router.patch(
+  "/:id/books/:bookId",
+  getUserMiddleware,
+  async function patchBookRequest(req, res) {
+    const { user } = req;
+    const { bookId } = req.params;
+    const book = user.books.find((aBook) => aBook._id.toString() === bookId);
+    const title = (req.body && req.body.title) || book.title;
 
-  try {
-    const userWithEditedBook = await editBook({
-      userId: user._id,
-      bookId,
-      title,
-    });
+    try {
+      const userWithEditedBook = await editBook({
+        userId: user._id,
+        bookId,
+        title,
+      });
 
-    if (userWithEditedBook && userWithEditedBook.errors) {
-      return res.status(400).json({ error: userWithEditedBook.errors.message });
+      if (userWithEditedBook && userWithEditedBook.errors) {
+        return res
+          .status(400)
+          .json({ error: userWithEditedBook.errors.message });
+      }
+
+      return res.status(200).json({ user: userWithEditedBook });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
-
-    return res.status(200).json({ user: userWithEditedBook });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
   }
-});
+);
 
 router.delete(
   "/:id/books/:bookId",
   getUserMiddleware,
-  async function runDeleteUser(req, res) {
+  async function deleteBookRequest(req, res) {
     const { bookId } = req.params;
 
     try {

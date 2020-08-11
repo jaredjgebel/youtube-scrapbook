@@ -4,15 +4,15 @@ const router = express.Router();
 const { createUser, editUser, deleteUser } = require("../database/userdb");
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 
-router.get("/:id", getUserMiddleware, function (req, res) {
+router.get("/:id", getUserMiddleware, function getUserRequest(req, res) {
   return res.status(200).json({ user: req.user });
 });
 
-router.post("/", async function (req, res) {
+router.post("/", async function postUserRequest(req, res) {
   const user = {
-    firstName: req.query.first,
-    lastName: req.query.last,
-    email: req.query.email,
+    firstName: req.body.first,
+    lastName: req.body.last,
+    email: req.body.email,
   };
 
   try {
@@ -28,7 +28,10 @@ router.post("/", async function (req, res) {
   }
 });
 
-router.patch("/:id", getUserMiddleware, async function (req, res) {
+router.patch("/:id", getUserMiddleware, async function patchUserRequest(
+  req,
+  res
+) {
   const editedUser = {
     id: req.user.id,
     firstName: req.query.first || req.user.firstName,
@@ -49,12 +52,15 @@ router.patch("/:id", getUserMiddleware, async function (req, res) {
   }
 });
 
-router.delete("/:id", getUserMiddleware, async function (req, res) {
+router.delete("/:id", getUserMiddleware, async function deleteUserRequest(
+  req,
+  res
+) {
   try {
     const userDeleteResponse = await deleteUser(req.user.id);
 
     if (userDeleteResponse.errors) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: userDeleteResponse.error.message });
     }
 
     return res.status(200).json({ user: userDeleteResponse });

@@ -11,7 +11,7 @@
   "rules": {
     "linebreak-style": ["off"],
     "no-underscore-dangle": ["off"],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["warn"]
   },
   "overrides": [
     {
