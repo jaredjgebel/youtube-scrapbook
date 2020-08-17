@@ -4,19 +4,13 @@ const { expect } = require("chai");
 const Book = require("../../models/book");
 const Page = require("../../models/page");
 
-describe("Book model", () => {
-  it("should have a title of an empty string on creation", () => {
+describe("Book model", function () {
+  it("should have a title of an empty string on creation", function () {
     const book = new Book({});
     expect(book.title).to.equal("");
   });
 
-  it("should have one empty page by default", () => {
-    const book = new Book({});
-    expect(book.pages.length).to.equal(1);
-    expect(book.pages[0].videos.length).to.equal(0);
-  });
-
-  it("should limit the number of pages for each book to 100", async () => {
+  it("should limit the number of pages for each book to 100", async function () {
     const book = new Book({
       title: "Too many pages",
       pages: new Array(150).fill(new Page()),

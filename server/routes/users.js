@@ -34,9 +34,9 @@ router.patch("/:id", getUserMiddleware, async function patchUserRequest(
 ) {
   const editedUser = {
     id: req.user.id,
-    firstName: req.query.first || req.user.firstName,
-    lastName: req.query.last || req.user.lastName,
-    email: req.query.email || req.user.email,
+    firstName: req.body.first || req.user.firstName,
+    lastName: req.body.last || req.user.lastName,
+    email: req.body.email || req.user.email,
   };
 
   try {

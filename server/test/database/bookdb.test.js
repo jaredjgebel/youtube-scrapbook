@@ -6,7 +6,7 @@ const Book = require("../../models/book");
 const { createBook, editBook, deleteBook } = require("../../database/bookdb");
 const { getUser } = require("../../database/userdb");
 
-describe("Book model database functions", () => {
+describe("Book model database functions", function () {
   let user;
   let book;
   const title = faker.random.words(5);
@@ -32,7 +32,7 @@ describe("Book model database functions", () => {
     }
   });
 
-  it("should create a new book ", async () => {
+  it("should create a new book ", async function () {
     const newTitle = faker.random.words(5);
     const userWithNewBook = await createBook({
       userId: user._id,
@@ -42,10 +42,10 @@ describe("Book model database functions", () => {
     // new book placed at final index (after default)
     const newBookIndex = userWithNewBook.books.length - 1;
 
-    expect(userWithNewBook.books[newBookIndex].title).to.equal(title);
+    expect(userWithNewBook.books[newBookIndex].title).to.equal(newTitle);
   });
 
-  it("should edit a given book", async () => {
+  it("should edit a given book", async function () {
     const newTitle = faker.random.words(5);
     let editedUser;
 
@@ -71,7 +71,7 @@ describe("Book model database functions", () => {
     }
   });
 
-  it("should delete a given book", async () => {
+  it("should delete a given book", async function () {
     try {
       const userWithDeletedBook = await deleteBook(user._id, book._id);
 

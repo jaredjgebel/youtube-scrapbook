@@ -25,12 +25,17 @@ app.use("/api/v1/users", booksRouter);
 app.use("/api/v1/users", pagesRouter);
 
 const db = mongoose.connection;
-mongoose.connect(process.env.MONGODB_URI, {
+const uri =
+  process.env.NODE_ENV === "test"
+    ? process.env.MONGODB_URI_TEST
+    : process.env.MONGODB_URI;
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
-mongoose.set("debug", true);
+// mongoose.set("debug", true);
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function onDatabaseConnectionSuccess() {

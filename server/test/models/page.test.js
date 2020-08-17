@@ -3,8 +3,8 @@ const { expect } = require("chai");
 const Page = require("../../models/page");
 const Video = require("../../models/video");
 
-describe("Page model", () => {
-  it("cannot hold more than two videos at a time", async () => {
+describe("Page model", function () {
+  it("cannot hold more than two videos at a time", async function () {
     const page = new Page();
 
     const videos = [

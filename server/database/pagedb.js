@@ -4,7 +4,7 @@ const { getUser } = require("./userdb");
 async function createPage({ userId, bookId, number }) {
   try {
     const user = await getUser(userId);
-    user.books.id(bookId).push(new Page({ number }));
+    user.books.id(bookId).pages.push(new Page({ number }));
 
     return await user.save();
   } catch (error) {
@@ -16,12 +16,9 @@ async function editPage({ userId, bookId, pageId, number }) {
   try {
     const user = await getUser(userId);
 
-    const book = user.books.find((abook) => abook._id.equals(bookId));
-    const bookIndex = user.books.indexOf(book);
-    const page = book.pages.find((apage) => apage._id.equals(pageId));
-    const pageIndex = book.pages.indexOf(page);
+    const page = user.books.id(bookId).pages.id(pageId);
 
-    user.books[bookIndex].pages.set(pageIndex, { book, number });
+    page.number = number;
 
     return await user.save();
   } catch (error) {
@@ -33,11 +30,9 @@ async function deletePage({ userId, bookId, pageId }) {
   try {
     const user = await getUser(userId);
 
-    const book = user.books.find((book) => book._id.equals(bookId));
-    const page = book.pages.find((page) => page._id.equals(pageId));
-    const index = book.pages.indexOf(page);
+    const book = user.books.id(bookId);
 
-    book.pages = book.pages.slice(index, 1);
+    book.pages = book.pages.pull(pageId);
 
     return await user.save();
   } catch (error) {

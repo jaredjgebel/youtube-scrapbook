@@ -12,13 +12,13 @@ const {
 } = require("../../database/videodb");
 const { getUser } = require("../../database/userdb");
 
-describe("Video database interface", () => {
+describe("Video database interface", function () {
   let user;
   let book;
   let page;
   let video;
 
-  before(async () => {
+  before(async function () {
     user = new User({
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -47,7 +47,7 @@ describe("Video database interface", () => {
     }
   });
 
-  it("should create a new video for a given page", async () => {
+  it("should create a new video for a given page", async function () {
     let userWithNewVideo;
 
     const link = "https://www.youtube.com/watch?v=41GSinwoMYA";
@@ -68,18 +68,17 @@ describe("Video database interface", () => {
     } finally {
       const savedUser = await getUser(user._id);
 
+      const { videos } = savedUser.books.id(book._id).pages.id(page._id);
+
       expect(
-        savedUser.books
-          .id(book._id)
-          .pages.id(page._id)
-          .videos.filter(
-            (aVideo) => aVideo.link === link && aVideo.notes === notes
-          ).length
+        videos.filter(
+          (aVideo) => aVideo.link === link && aVideo.notes === notes
+        ).length
       ).to.equal(1);
     }
   });
 
-  it("should edit a given video", async () => {
+  it("should edit a given video", async function () {
     const newLink = "https://www.youtube.com/watch?v=jfYWwQrtzzY";
     const newNotes = faker.lorem.sentences(3);
     let userWithEditedVideo;
@@ -99,17 +98,17 @@ describe("Video database interface", () => {
       throw new Error(error);
     } finally {
       const savedUser = await getUser(user._id);
-      const savedVideo = savedUser.books
+      const editedVideo = savedUser.books
         .id(book._id)
         .pages.id(page._id)
         .videos.id(video._id);
 
-      expect(savedVideo.link).to.equal(newLink);
-      expect(savedVideo.notes).to.equal(newNotes);
+      expect(editedVideo.link).to.equal(newLink);
+      expect(editedVideo.notes).to.equal(newNotes);
     }
   });
 
-  it("should delete a given video", async () => {
+  it("should delete a given video", async function () {
     try {
       const userWithDeletedVideo = await deleteVideo({
         userId: user._id,

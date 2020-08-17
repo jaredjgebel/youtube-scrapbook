@@ -6,12 +6,12 @@ const Book = require("../../models/book");
 const { createPage, editPage, deletePage } = require("../../database/pagedb");
 const { getUser } = require("../../database/userdb");
 
-describe("Page database interfaces", () => {
+describe("Page database interfaces", function () {
   let user;
   let book;
-  let page;
+  let pageId;
 
-  before(async () => {
+  before(async function () {
     user = new User({
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -32,7 +32,7 @@ describe("Page database interfaces", () => {
     }
   });
 
-  it("should create a new page for a given book in the database", async () => {
+  it("should create a new page for a given book in the database", async function () {
     let userWithNewPage;
 
     try {
@@ -48,54 +48,52 @@ describe("Page database interfaces", () => {
     } finally {
       const savedUser = await getUser(user._id);
 
-      const bookWithNewPage = savedUser.books.find((aBook) =>
-        aBook._id.equals(book._id)
-      );
-      const newPage = bookWithNewPage.pages.find((aPage) => aPage.number === 3);
+      const bookWithNewPage = savedUser.books.id(book._id);
+      const newPage = bookWithNewPage.pages.find((page) => page.number === 3);
+
+      pageId = newPage.id;
 
       expect(newPage.number).to.equal(3);
     }
   });
 
-  it("should edit a given page in the database", async () => {
-    const newTitle = faker.random.words(5);
-    let userWithEditedPage;
+  it("should edit a given page in the database", async function () {
+    const newPageNumber = 100;
 
     try {
-      userWithEditedPage = await editPage({
+      const userWithEditedPage = await editPage({
         userId: user._id,
         bookId: book._id,
-        pageId: page._id,
-        title: newTitle,
+        pageId,
+        number: newPageNumber,
       });
       expect(userWithEditedPage).to.be.an.instanceof(User);
     } catch (error) {
       throw new Error(error);
     } finally {
       const savedUser = await getUser(user._id);
-      const editedPage = savedUser.books.id(book._id).pages.id(page._id);
+      const editedPage = savedUser.books.id(book._id).pages.id(pageId);
 
-      expect(editedPage.title).to.equal(newTitle);
+      expect(editedPage.number).to.equal(newPageNumber);
     }
   });
 
-  it("should delete a given page in the database", async () => {
-    let userWithDeletedPage;
-
+  it("should delete a given page in the database", async function () {
     try {
-      userWithDeletedPage = await deletePage({
+      const userWithDeletedPage = await deletePage({
         userId: user._id,
         bookId: book._id,
-        pageId: page._id,
+        pageId,
       });
+
       expect(userWithDeletedPage).to.be.an.instanceof(User);
     } catch (error) {
       throw new Error(error);
     } finally {
       const savedUser = await getUser(user._id);
-      const deletedPage = savedUser.books.id(book._id).pages.id(page._id);
+      const deletedPage = savedUser.books.id(book._id).pages.id(pageId);
 
-      expect(deletedPage).to.be.undefined;
+      expect(deletedPage).to.be.null;
     }
   });
 });

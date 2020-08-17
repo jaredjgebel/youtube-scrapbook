@@ -9,30 +9,31 @@ const {
   deleteUser,
 } = require("../../database/userdb");
 
-const userOneDetails = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  email: faker.internet.email(),
-};
+describe("User database interface", async function () {
+  let userDetails;
+  let originalUser;
 
-let userOne;
+  before(async function () {
+    userDetails = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      email: faker.internet.email(),
+    };
 
-before(async () => {
-  userOne = new User(userOneDetails);
+    originalUser = new User(userDetails);
 
-  await userOne.save();
-});
-
-describe("User model database interface", async () => {
-  it("should retrieve user data based on a given id", async () => {
-    const user = await getUser(userOne.id);
-
-    expect(user.firstName).to.equal(userOneDetails.firstName);
-    expect(user.lastName).to.equal(userOneDetails.lastName);
-    expect(user.email).to.equal(userOneDetails.email);
+    await originalUser.save();
   });
 
-  it("should throw an error if an incorrect ID is passed", async () => {
+  it("should retrieve user data based on a given id", async function () {
+    const user = await getUser(originalUser.id);
+
+    expect(user.firstName).to.equal(userDetails.firstName);
+    expect(user.lastName).to.equal(userDetails.lastName);
+    expect(user.email).to.equal(userDetails.email);
+  });
+
+  it("should throw an error if an incorrect ID is passed", async function () {
     try {
       const user = await getUser("NOT_A_VALID_ID");
       return user; // shouldn't run
@@ -42,7 +43,7 @@ describe("User model database interface", async () => {
     }
   });
 
-  it("should create a new user with the given data", async () => {
+  it("should create a new user with the given data", async function () {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const email = faker.internet.email();
@@ -54,23 +55,23 @@ describe("User model database interface", async () => {
     expect(user.email).to.equal(email);
   });
 
-  it("should update an existing user", async () => {
+  it("should update an existing user", async function () {
     const newEmail = faker.internet.email();
 
     const updatedUser = await editUser({
-      id: userOne.id,
-      firstName: userOne.firstName,
-      lastName: userOne.lastName,
+      id: originalUser.id,
+      firstName: originalUser.firstName,
+      lastName: originalUser.lastName,
       email: newEmail,
     });
 
-    expect(updatedUser.id).to.equal(userOne.id);
+    expect(updatedUser.id).to.equal(originalUser.id);
     expect(updatedUser.email).to.equal(newEmail);
   });
 
-  it("should delete a user with the given id", async () => {
-    const response = await deleteUser(userOne.id);
+  it("should delete a user with the given id", async function () {
+    const response = await deleteUser(originalUser.id);
 
-    expect(response.id).to.equal(userOne.id);
+    expect(response.id).to.equal(originalUser.id);
   });
 });

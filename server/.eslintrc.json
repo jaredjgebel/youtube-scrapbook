@@ -20,7 +20,8 @@
         "no-undef": "off",
         "no-unused-expressions": "off",
         "no-console": "off",
-        "consistent-return": "off"
+        "consistent-return": "off",
+        "func-names": "off"
       }
     },
     {

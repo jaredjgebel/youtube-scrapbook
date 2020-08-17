@@ -11,7 +11,7 @@ router.get("/:id/books/:bookId", getUserMiddleware, function getBookRequest(
   const { user } = req;
   const { bookId } = req.params;
 
-  const book = user.books.find((aBook) => aBook._id.toString() === bookId);
+  const book = user.books.id(bookId);
 
   return res.status(200).json({ book });
 });
@@ -44,7 +44,9 @@ router.patch(
   async function patchBookRequest(req, res) {
     const { user } = req;
     const { bookId } = req.params;
-    const book = user.books.find((aBook) => aBook._id.toString() === bookId);
+
+    const book = user.books.id(bookId);
+
     const title = (req.body && req.body.title) || book.title;
 
     try {

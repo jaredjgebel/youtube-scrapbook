@@ -1,9 +1,9 @@
-const { expect } = require('chai');
-const faker = require('faker');
-const User = require('../../models/user');
+const { expect } = require("chai");
+const faker = require("faker");
+const User = require("../../models/user");
 
-describe('User model', () => {
-  it('should require first name on creation', async () => {
+describe("User model", function () {
+  it("should require first name on creation", async function () {
     const noFirstName = new User({
       lastName: faker.name.lastName(),
     });
@@ -13,13 +13,13 @@ describe('User model', () => {
     try {
       userDoc = await noFirstName.save();
     } catch (err) {
-      expect(err._message).to.equal('User validation failed');
+      expect(err._message).to.equal("User validation failed");
     }
 
     expect(userDoc).to.be.undefined;
   });
 
-  it('should require last name on creation', async () => {
+  it("should require last name on creation", async function () {
     const noLastName = new User({
       firstName: faker.name.firstName(),
     });
@@ -29,20 +29,9 @@ describe('User model', () => {
     try {
       userDoc = await noLastName.save();
     } catch (err) {
-      expect(err._message).to.equal('User validation failed');
+      expect(err._message).to.equal("User validation failed");
     }
 
     expect(userDoc).to.be.undefined;
-  });
-
-  it('should have one empty book upon creation', () => {
-    const user = new User({
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      email: faker.internet.email(),
-    });
-
-    expect(user.books.length).to.equal(1);
-    expect(user.books[0].title).to.equal('');
   });
 });
