@@ -1,20 +1,12 @@
 require("../dbHelper");
 const request = require("supertest");
-const faker = require("faker");
 const { expect } = require("chai");
 const app = require("../../app");
 const User = require("../../models/user");
 const { createUser } = require("../../database/userdb");
+const createRandomUserData = require("../factoryHelper");
 
 const apiPrefix = "/api/v1";
-
-const createRandomUserData = () => {
-  return {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email(),
-  };
-};
 
 let user;
 

@@ -32,7 +32,7 @@ router.post("/:id/books", getUserMiddleware, async function postBookRequest(
       return res.status(400).json({ error: userWithNewBook.errors.message });
     }
 
-    return res.status(200).json({ user: userWithNewBook });
+    return res.status(200).json({ books: userWithNewBook.books });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -62,7 +62,7 @@ router.patch(
           .json({ error: userWithEditedBook.errors.message });
       }
 
-      return res.status(200).json({ user: userWithEditedBook });
+      return res.status(200).json({ books: userWithEditedBook.books });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -76,12 +76,14 @@ router.delete(
     const { bookId } = req.params;
 
     try {
-      const deletedBook = await deleteBook(req.user._id, bookId);
-      if (deletedBook && deletedBook.errors) {
-        return res.status(400).json({ error: deletedBook.errors.message });
+      const userWithDeletedBook = await deleteBook(req.user._id, bookId);
+      if (userWithDeletedBook && userWithDeletedBook.errors) {
+        return res
+          .status(400)
+          .json({ error: userWithDeletedBook.errors.message });
       }
 
-      return res.status(200).json({ book: deletedBook });
+      return res.status(200).json({ user: userWithDeletedBook });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
