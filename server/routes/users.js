@@ -10,8 +10,8 @@ router.get("/:id", getUserMiddleware, function getUserRequest(req, res) {
 
 router.post("/", async function postUserRequest(req, res) {
   const user = {
-    firstName: req.body.first,
-    lastName: req.body.last,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
   };
 
@@ -34,8 +34,8 @@ router.patch("/:id", getUserMiddleware, async function patchUserRequest(
 ) {
   const editedUser = {
     id: req.user.id,
-    firstName: req.body.first || req.user.firstName,
-    lastName: req.body.last || req.user.lastName,
+    firstName: req.body.firstName || req.user.firstName,
+    lastName: req.body.lastName || req.user.lastName,
     email: req.body.email || req.user.email,
   };
 
