@@ -9,18 +9,17 @@ const createRandomUserData = require("../factoryHelper");
 const apiPrefix = "/api/v1";
 
 let user;
+const userInfo = createRandomUserData();
+
+before(async function () {
+  user = await createUser(userInfo);
+
+  if (!(user instanceof User)) {
+    throw new Error(`${user}`);
+  }
+});
 
 describe("GET /user", function getUserTest() {
-  const userInfo = createRandomUserData();
-
-  before(async function () {
-    user = await createUser(userInfo);
-
-    if (!(user instanceof User)) {
-      throw new Error(`${user}`);
-    }
-  });
-
   it("responds with all user information", function (done) {
     request(app)
       .get(`${apiPrefix}/users/${user.id}`)

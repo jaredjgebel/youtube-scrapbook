@@ -14,29 +14,29 @@ let user;
 let userWithBook;
 let book;
 
-describe("GET /books", () => {
-  before(async () => {
-    const userInfo = createRandomUserData();
+before(async () => {
+  const userInfo = createRandomUserData();
 
-    user = await createUser(userInfo);
+  user = await createUser(userInfo);
 
-    if (!(user instanceof User)) {
-      throw new Error(`${user}`);
-    }
+  if (!(user instanceof User)) {
+    throw new Error(`${user}`);
+  }
 
-    userWithBook = await createBook({
-      userId: user.id,
-      title: faker.lorem.words(5),
-    });
-
-    if (!(userWithBook instanceof User)) {
-      throw new Error(`${userWithBook}`);
-    }
-
-    // eslint-disable-next-line prefer-destructuring
-    book = userWithBook.books[0];
+  userWithBook = await createBook({
+    userId: user.id,
+    title: faker.lorem.words(5),
   });
 
+  if (!(userWithBook instanceof User)) {
+    throw new Error(`${userWithBook}`);
+  }
+
+  // eslint-disable-next-line prefer-destructuring
+  book = userWithBook.books[0];
+});
+
+describe("GET /books", () => {
   it("responds with information for a given book", (done) => {
     request(app)
       .get(`${apiPrefix}/users/${user.id}/books/${book.id}`)
@@ -98,5 +98,3 @@ describe("DELETE /books", () => {
       .end(done);
   });
 });
-
-// "5f43fab90e315947d4f3a856"

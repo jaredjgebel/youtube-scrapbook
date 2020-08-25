@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
-const { createPage, editPage } = require("../database/pagedb");
+const { createPage, editPage, deletePage } = require("../database/pagedb");
 
 router.get(
   "/:id/books/:bookId/pages/:pageId",
@@ -24,20 +24,22 @@ router.post(
   async function postPagesRequest(req, res) {
     const { user } = req;
     const { bookId } = req.params;
-    const title = (req.body && req.body.title) || "";
+    const number = req.body && req.body.number;
 
     try {
       const userWithNewPage = await createPage({
         userId: user._id,
         bookId,
-        title,
+        number,
       });
 
       if (userWithNewPage instanceof Error) {
         return res.status(400).json({ error: userWithNewPage.message });
       }
 
-      return res.status(200).json({ user: userWithNewPage });
+      return res
+        .status(200)
+        .json({ pages: userWithNewPage.books.id(bookId).pages });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -69,7 +71,36 @@ router.patch(
           .json({ error: userWithEditedPage.errors.message });
       }
 
-      return res.status(200).json({ user: userWithEditedPage });
+      return res
+        .status(200)
+        .json({ pages: userWithEditedPage.books.id(bookId).pages });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+);
+
+router.delete(
+  "/:id/books/:bookId/pages/:pageId",
+  getUserMiddleware,
+  async (req, res) => {
+    const { user } = req;
+    const { bookId, pageId } = req.params;
+
+    try {
+      const userWithDeletedPage = await deletePage({
+        userId: user.id,
+        bookId,
+        pageId,
+      });
+
+      if (userWithDeletedPage instanceof Error) {
+        return res.status(400).json({ error: userWithDeletedPage });
+      }
+
+      return res
+        .status(200)
+        .json({ pages: userWithDeletedPage.books.id(bookId).pages });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
