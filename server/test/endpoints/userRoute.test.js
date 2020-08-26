@@ -41,7 +41,7 @@ describe("/POST users", function () {
       .post(`${apiPrefix}/users`)
       .send(newUserInfo)
       .expect((response) => {
-        expect(response.status).to.equal(200);
+        expect(response.status).to.equal(201);
         expect(response.headers["content-type"]).to.include("json");
 
         expect(response.body.user.firstName).to.equal(newUserInfo.firstName);

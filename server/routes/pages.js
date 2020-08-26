@@ -37,7 +37,7 @@ router.post(
       }
 
       return res
-        .status(200)
+        .status(201)
         .json({ pages: userWithNewPage.books.id(bookId).pages });
     } catch (error) {
       return res.status(500).json({ error: error.message });

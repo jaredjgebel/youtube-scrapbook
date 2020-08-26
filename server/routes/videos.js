@@ -38,7 +38,7 @@ router.post(
         return res.status(400).json({ error: userWithNewVideo.message });
       }
 
-      return res.status(200).json({
+      return res.status(201).json({
         videos: userWithNewVideo.books.id(bookId).pages.id(pageId).videos,
       });
     } catch (error) {

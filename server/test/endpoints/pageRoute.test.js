@@ -68,7 +68,7 @@ describe("POST /pages", () => {
       .post(`${apiPrefix}/users/${user.id}/books/${book.id}/pages`)
       .send({ number: randomNumber })
       .expect((response) => {
-        expect(response.status).to.equal(200);
+        expect(response.status).to.equal(201);
         expect(response.headers["content-type"]).to.include("json");
 
         expect(response.body.pages[1].number).to.equal(randomNumber);

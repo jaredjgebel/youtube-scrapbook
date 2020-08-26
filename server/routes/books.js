@@ -32,7 +32,7 @@ router.post("/:id/books", getUserMiddleware, async function postBookRequest(
       return res.status(400).json({ error: userWithNewBook.errors.message });
     }
 
-    return res.status(200).json({ books: userWithNewBook.books });
+    return res.status(201).json({ books: userWithNewBook.books });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
