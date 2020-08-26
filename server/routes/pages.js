@@ -9,8 +9,7 @@ router.get(
   getUserMiddleware,
   function getPagesFromUser(req, res) {
     const { user } = req;
-    const { bookId } = req.params;
-    const { pageId } = req.params;
+    const { bookId, pageId } = req.params;
 
     const page = user.books.id(bookId).pages.id(pageId);
 
@@ -21,7 +20,7 @@ router.get(
 router.post(
   "/:id/books/:bookId/pages",
   getUserMiddleware,
-  async function postPagesRequest(req, res) {
+  async function postPageRequest(req, res) {
     const { user } = req;
     const { bookId } = req.params;
     const number = req.body && req.body.number;
@@ -49,10 +48,9 @@ router.post(
 router.patch(
   "/:id/books/:bookId/pages/:pageId",
   getUserMiddleware,
-  async function patchPagesRequest(req, res) {
+  async function patchPageRequest(req, res) {
     const { user } = req;
-    const { bookId } = req.params;
-    const { pageId } = req.params;
+    const { bookId, pageId } = req.params;
     const page = user.books.id(bookId).pages.id(pageId);
 
     const number = (req.body && req.body.number) || page.number;
@@ -83,7 +81,7 @@ router.patch(
 router.delete(
   "/:id/books/:bookId/pages/:pageId",
   getUserMiddleware,
-  async (req, res) => {
+  async function deletePageRequest(req, res) {
     const { user } = req;
     const { bookId, pageId } = req.params;
 

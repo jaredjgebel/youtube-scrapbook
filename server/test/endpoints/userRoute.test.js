@@ -19,7 +19,7 @@ before(async function () {
   }
 });
 
-describe("GET /user", function getUserTest() {
+describe("GET /users", function getUserTest() {
   it("responds with all user information", function (done) {
     request(app)
       .get(`${apiPrefix}/users/${user.id}`)
@@ -33,7 +33,7 @@ describe("GET /user", function getUserTest() {
   });
 });
 
-describe("/POST user", function () {
+describe("/POST users", function () {
   const newUserInfo = createRandomUserData();
 
   it("responds with the created user", (done) => {
@@ -52,7 +52,7 @@ describe("/POST user", function () {
   });
 });
 
-describe("/PATCH user", function () {
+describe("/PATCH users", function () {
   const patchUserInfo = createRandomUserData();
 
   it("responds with the edited user", (done) => {
@@ -71,7 +71,7 @@ describe("/PATCH user", function () {
   });
 });
 
-describe("/DELETE user", function () {
+describe("/DELETE users", function () {
   it("deletes a given user", (done) => {
     request(app)
       .delete(`${apiPrefix}/users/${user.id}`)
