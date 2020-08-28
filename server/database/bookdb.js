@@ -32,7 +32,7 @@ async function deleteBook(userId, bookId) {
   try {
     const user = await getUser(userId);
 
-    user.books = user.books.filter((book) => !book._id.equals(bookId));
+    user.books.pull(bookId);
 
     return await user.save();
   } catch (error) {

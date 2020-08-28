@@ -20,7 +20,7 @@ router.get(
 router.post(
   "/:id/books/:bookId/pages/:pageId/videos",
   getUserMiddleware,
-  async function postVideoRequest(req, res) {
+  async function postVideoRequest(req, res, next) {
     const { user } = req;
     const { bookId, pageId } = req.params;
     const { link, notes } = req.body;
@@ -35,14 +35,14 @@ router.post(
       });
 
       if (userWithNewVideo instanceof Error) {
-        return res.status(400).json({ error: userWithNewVideo.message });
+        return next(userWithNewVideo);
       }
 
       return res.status(201).json({
         videos: userWithNewVideo.books.id(bookId).pages.id(pageId).videos,
       });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );
@@ -50,7 +50,7 @@ router.post(
 router.patch(
   "/:id/books/:bookId/pages/:pageId/videos/:videoId",
   getUserMiddleware,
-  async function patchVideoRequest(req, res) {
+  async function patchVideoRequest(req, res, next) {
     const { user } = req;
     const { bookId, pageId, videoId } = req.params;
     const { notes, link } = req.body;
@@ -66,14 +66,14 @@ router.patch(
       });
 
       if (userWithEditedVideo instanceof Error) {
-        return res.status(400).json({ error: userWithEditedVideo.message });
+        return next(userWithEditedVideo);
       }
 
       return res.status(200).json({
         videos: userWithEditedVideo.books.id(bookId).pages.id(pageId).videos,
       });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );
@@ -81,7 +81,7 @@ router.patch(
 router.delete(
   "/:id/books/:bookId/pages/:pageId/videos/:videoId",
   getUserMiddleware,
-  async function deleteVideoRequest(req, res) {
+  async function deleteVideoRequest(req, res, next) {
     const { user } = req;
     const { bookId, pageId, videoId } = req.params;
 
@@ -94,14 +94,14 @@ router.delete(
       });
 
       if (userWithDeletedVideo instanceof Error) {
-        return res.status(400).json({ error: userWithDeletedVideo.message });
+        return next(userWithDeletedVideo);
       }
 
       return res.status(200).json({
         videos: userWithDeletedVideo.books.id(bookId).pages.id(pageId).videos,
       });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );

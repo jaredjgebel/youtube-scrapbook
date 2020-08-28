@@ -8,7 +8,7 @@ router.get("/:id", getUserMiddleware, function getUserRequest(req, res) {
   return res.status(200).json({ user: req.user });
 });
 
-router.post("/", async function postUserRequest(req, res) {
+router.post("/", async function postUserRequest(req, res, next) {
   const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -18,19 +18,20 @@ router.post("/", async function postUserRequest(req, res) {
   try {
     const userPostResponse = await createUser(user);
 
-    if (userPostResponse.errors) {
-      return res.status(400).json({ error: userPostResponse.errors.message });
+    if (userPostResponse instanceof Error) {
+      return next(userPostResponse);
     }
 
     return res.status(201).json({ user: userPostResponse });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return next(error);
   }
 });
 
 router.patch("/:id", getUserMiddleware, async function patchUserRequest(
   req,
-  res
+  res,
+  next
 ) {
   const editedUser = {
     id: req.user.id,
@@ -42,30 +43,31 @@ router.patch("/:id", getUserMiddleware, async function patchUserRequest(
   try {
     const userPatchResponse = await editUser(editedUser);
 
-    if (userPatchResponse.errors) {
-      return res.status(400).json({ error: userPatchResponse.errors.message });
+    if (userPatchResponse instanceof Error) {
+      return next(userPatchResponse);
     }
 
     return res.status(200).json({ user: userPatchResponse });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return next(error);
   }
 });
 
 router.delete("/:id", getUserMiddleware, async function deleteUserRequest(
   req,
-  res
+  res,
+  next
 ) {
   try {
     const userDeleteResponse = await deleteUser(req.user.id);
 
-    if (userDeleteResponse.errors) {
-      return res.status(400).json({ error: userDeleteResponse.error.message });
+    if (userDeleteResponse instanceof Error) {
+      return next(userDeleteResponse);
     }
 
     return res.status(200).json({ user: userDeleteResponse });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return next(error);
   }
 });
 

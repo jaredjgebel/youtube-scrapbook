@@ -45,10 +45,28 @@ describe("/POST users", function () {
         expect(response.headers["content-type"]).to.include("json");
 
         expect(response.body.user.firstName).to.equal(newUserInfo.firstName);
-        expect(response.body.user.lastName).to.equal(newUserInfo.lastName);
         expect(response.body.user.email).to.equal(newUserInfo.email);
       })
       .end(done);
+  });
+
+  it("responds with status 400 if user has not entered first and last name", async () => {
+    const incompleteUserInfo = {
+      firstName: "Tina",
+      email: "tinag@gmail.com",
+    };
+
+    request(app)
+      .post(`${apiPrefix}/users`)
+      .send(incompleteUserInfo)
+      .expect((response) => {
+        expect(response.status).to.equal(400);
+        expect(response.headers["content-type"]).to.include("json");
+
+        expect(
+          Object.keys(response.body.error).find((key) => key === "lastName")
+        ).to.exist;
+      });
   });
 });
 

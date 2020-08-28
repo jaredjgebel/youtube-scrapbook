@@ -11,6 +11,7 @@ const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 const pagesRouter = require("./routes/pages");
 const videosRouter = require("./routes/videos");
+const errorHelper = require("./middleware/errorHelper");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,8 @@ app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/users", booksRouter);
 app.use("/api/v1/users", pagesRouter);
 app.use("/api/v1/users", videosRouter);
+
+app.use(errorHelper);
 
 const db = mongoose.connection;
 const uri =

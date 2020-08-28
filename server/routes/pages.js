@@ -20,7 +20,7 @@ router.get(
 router.post(
   "/:id/books/:bookId/pages",
   getUserMiddleware,
-  async function postPageRequest(req, res) {
+  async function postPageRequest(req, res, next) {
     const { user } = req;
     const { bookId } = req.params;
     const number = req.body && req.body.number;
@@ -33,14 +33,14 @@ router.post(
       });
 
       if (userWithNewPage instanceof Error) {
-        return res.status(400).json({ error: userWithNewPage.message });
+        return next(userWithNewPage);
       }
 
       return res
         .status(201)
         .json({ pages: userWithNewPage.books.id(bookId).pages });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );
@@ -48,7 +48,7 @@ router.post(
 router.patch(
   "/:id/books/:bookId/pages/:pageId",
   getUserMiddleware,
-  async function patchPageRequest(req, res) {
+  async function patchPageRequest(req, res, next) {
     const { user } = req;
     const { bookId, pageId } = req.params;
     const page = user.books.id(bookId).pages.id(pageId);
@@ -63,17 +63,15 @@ router.patch(
         number,
       });
 
-      if (userWithEditedPage && userWithEditedPage.errors) {
-        return res
-          .status(400)
-          .json({ error: userWithEditedPage.errors.message });
+      if (userWithEditedPage) {
+        return next(userWithEditedPage);
       }
 
       return res
         .status(200)
         .json({ pages: userWithEditedPage.books.id(bookId).pages });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );
@@ -81,7 +79,7 @@ router.patch(
 router.delete(
   "/:id/books/:bookId/pages/:pageId",
   getUserMiddleware,
-  async function deletePageRequest(req, res) {
+  async function deletePageRequest(req, res, next) {
     const { user } = req;
     const { bookId, pageId } = req.params;
 
@@ -93,14 +91,14 @@ router.delete(
       });
 
       if (userWithDeletedPage instanceof Error) {
-        return res.status(400).json({ error: userWithDeletedPage });
+        next(userWithDeletedPage);
       }
 
       return res
         .status(200)
         .json({ pages: userWithDeletedPage.books.id(bookId).pages });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );

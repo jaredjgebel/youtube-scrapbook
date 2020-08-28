@@ -18,7 +18,8 @@ router.get("/:id/books/:bookId", getUserMiddleware, function getBookRequest(
 
 router.post("/:id/books", getUserMiddleware, async function postBookRequest(
   req,
-  res
+  res,
+  next
 ) {
   const book = {
     userId: req.user._id,
@@ -28,20 +29,20 @@ router.post("/:id/books", getUserMiddleware, async function postBookRequest(
   try {
     const userWithNewBook = await createBook(book);
 
-    if (userWithNewBook.errors) {
-      return res.status(400).json({ error: userWithNewBook.errors.message });
+    if (userWithNewBook instanceof Error) {
+      return next(userWithNewBook);
     }
 
     return res.status(201).json({ books: userWithNewBook.books });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return next(error);
   }
 });
 
 router.patch(
   "/:id/books/:bookId",
   getUserMiddleware,
-  async function patchBookRequest(req, res) {
+  async function patchBookRequest(req, res, next) {
     const { user } = req;
     const { bookId } = req.params;
 
@@ -56,15 +57,13 @@ router.patch(
         title,
       });
 
-      if (userWithEditedBook && userWithEditedBook.errors) {
-        return res
-          .status(400)
-          .json({ error: userWithEditedBook.errors.message });
+      if (userWithEditedBook instanceof Error) {
+        return next(userWithEditedBook);
       }
 
       return res.status(200).json({ books: userWithEditedBook.books });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );
@@ -72,20 +71,19 @@ router.patch(
 router.delete(
   "/:id/books/:bookId",
   getUserMiddleware,
-  async function deleteBookRequest(req, res) {
+  async function deleteBookRequest(req, res, next) {
     const { bookId } = req.params;
 
     try {
       const userWithDeletedBook = await deleteBook(req.user._id, bookId);
-      if (userWithDeletedBook && userWithDeletedBook.errors) {
-        return res
-          .status(400)
-          .json({ error: userWithDeletedBook.errors.message });
+
+      if (userWithDeletedBook instanceof Error) {
+        return next(userWithDeletedBook);
       }
 
       return res.status(200).json({ user: userWithDeletedBook });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   }
 );
