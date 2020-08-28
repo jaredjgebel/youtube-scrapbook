@@ -3,9 +3,11 @@ const express = require("express");
 const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 const { createPage, editPage, deletePage } = require("../database/pagedb");
+const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
   "/:id/books/:bookId/pages/:pageId",
+  isValidObjectId,
   getUserMiddleware,
   function getPagesFromUser(req, res) {
     const { user } = req;
@@ -19,6 +21,7 @@ router.get(
 
 router.post(
   "/:id/books/:bookId/pages",
+  isValidObjectId,
   getUserMiddleware,
   async function postPageRequest(req, res, next) {
     const { user } = req;
@@ -47,6 +50,7 @@ router.post(
 
 router.patch(
   "/:id/books/:bookId/pages/:pageId",
+  isValidObjectId,
   getUserMiddleware,
   async function patchPageRequest(req, res, next) {
     const { user } = req;
@@ -78,6 +82,7 @@ router.patch(
 
 router.delete(
   "/:id/books/:bookId/pages/:pageId",
+  isValidObjectId,
   getUserMiddleware,
   async function deletePageRequest(req, res, next) {
     const { user } = req;

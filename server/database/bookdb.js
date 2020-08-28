@@ -17,10 +17,9 @@ async function editBook({ userId, bookId, title }) {
   try {
     const user = await getUser(userId);
 
-    const bookToUpdate = user.books.find((book) => book._id.equals(bookId));
-    const index = user.books.indexOf(bookToUpdate);
+    const bookToUpdate = user.books.id(bookId);
 
-    user.books[index].title = title;
+    bookToUpdate.title = title;
 
     return await user.save();
   } catch (error) {

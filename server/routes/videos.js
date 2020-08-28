@@ -3,9 +3,11 @@ const express = require("express");
 const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 const { createVideo, editVideo, deleteVideo } = require("../database/videodb");
+const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
   "/:id/books/:bookId/pages/:pageId/videos/:videoId",
+  isValidObjectId,
   getUserMiddleware,
   function getVideosFromUser(req, res) {
     const { user } = req;
@@ -19,6 +21,7 @@ router.get(
 
 router.post(
   "/:id/books/:bookId/pages/:pageId/videos",
+  isValidObjectId,
   getUserMiddleware,
   async function postVideoRequest(req, res, next) {
     const { user } = req;
@@ -49,6 +52,7 @@ router.post(
 
 router.patch(
   "/:id/books/:bookId/pages/:pageId/videos/:videoId",
+  isValidObjectId,
   getUserMiddleware,
   async function patchVideoRequest(req, res, next) {
     const { user } = req;
@@ -80,6 +84,7 @@ router.patch(
 
 router.delete(
   "/:id/books/:bookId/pages/:pageId/videos/:videoId",
+  isValidObjectId,
   getUserMiddleware,
   async function deleteVideoRequest(req, res, next) {
     const { user } = req;

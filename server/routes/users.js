@@ -3,8 +3,12 @@ const express = require("express");
 const router = express.Router();
 const { createUser, editUser, deleteUser } = require("../database/userdb");
 const getUserMiddleware = require("../middleware/getUserMiddleware");
+const isValidObjectId = require("../middleware/idValidationMiddleware");
 
-router.get("/:id", getUserMiddleware, function getUserRequest(req, res) {
+router.get("/:id", getUserMiddleware, isValidObjectId, function getUserRequest(
+  req,
+  res
+) {
   return res.status(200).json({ user: req.user });
 });
 
@@ -28,47 +32,49 @@ router.post("/", async function postUserRequest(req, res, next) {
   }
 });
 
-router.patch("/:id", getUserMiddleware, async function patchUserRequest(
-  req,
-  res,
-  next
-) {
-  const editedUser = {
-    id: req.user.id,
-    firstName: req.body.firstName || req.user.firstName,
-    lastName: req.body.lastName || req.user.lastName,
-    email: req.body.email || req.user.email,
-  };
+router.patch(
+  "/:id",
+  isValidObjectId,
+  getUserMiddleware,
+  async function patchUserRequest(req, res, next) {
+    const editedUser = {
+      id: req.user.id,
+      firstName: req.body.firstName || req.user.firstName,
+      lastName: req.body.lastName || req.user.lastName,
+      email: req.body.email || req.user.email,
+    };
 
-  try {
-    const userPatchResponse = await editUser(editedUser);
+    try {
+      const userPatchResponse = await editUser(editedUser);
 
-    if (userPatchResponse instanceof Error) {
-      return next(userPatchResponse);
+      if (userPatchResponse instanceof Error) {
+        return next(userPatchResponse);
+      }
+
+      return res.status(200).json({ user: userPatchResponse });
+    } catch (error) {
+      return next(error);
     }
-
-    return res.status(200).json({ user: userPatchResponse });
-  } catch (error) {
-    return next(error);
   }
-});
+);
 
-router.delete("/:id", getUserMiddleware, async function deleteUserRequest(
-  req,
-  res,
-  next
-) {
-  try {
-    const userDeleteResponse = await deleteUser(req.user.id);
+router.delete(
+  "/:id",
+  isValidObjectId,
+  getUserMiddleware,
+  async function deleteUserRequest(req, res, next) {
+    try {
+      const userDeleteResponse = await deleteUser(req.user.id);
 
-    if (userDeleteResponse instanceof Error) {
-      return next(userDeleteResponse);
+      if (userDeleteResponse instanceof Error) {
+        return next(userDeleteResponse);
+      }
+
+      return res.status(200).json({ user: userDeleteResponse });
+    } catch (error) {
+      return next(error);
     }
-
-    return res.status(200).json({ user: userDeleteResponse });
-  } catch (error) {
-    return next(error);
   }
-});
+);
 
 module.exports = router;

@@ -3,44 +3,49 @@ const express = require("express");
 const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 const { createBook, editBook, deleteBook } = require("../database/bookdb");
+const isValidObjectId = require("../middleware/idValidationMiddleware");
 
-router.get("/:id/books/:bookId", getUserMiddleware, function getBookRequest(
-  req,
-  res
-) {
-  const { user } = req;
-  const { bookId } = req.params;
+router.get(
+  "/:id/books/:bookId",
+  isValidObjectId,
+  getUserMiddleware,
+  function getBookRequest(req, res) {
+    const { user } = req;
+    const { bookId } = req.params;
 
-  const book = user.books.id(bookId);
+    const book = user.books.id(bookId);
 
-  return res.status(200).json({ book });
-});
-
-router.post("/:id/books", getUserMiddleware, async function postBookRequest(
-  req,
-  res,
-  next
-) {
-  const book = {
-    userId: req.user._id,
-    title: req.body.title || "",
-  };
-
-  try {
-    const userWithNewBook = await createBook(book);
-
-    if (userWithNewBook instanceof Error) {
-      return next(userWithNewBook);
-    }
-
-    return res.status(201).json({ books: userWithNewBook.books });
-  } catch (error) {
-    return next(error);
+    return res.status(200).json({ book });
   }
-});
+);
+
+router.post(
+  "/:id/books",
+  isValidObjectId,
+  getUserMiddleware,
+  async function postBookRequest(req, res, next) {
+    const book = {
+      userId: req.user._id,
+      title: req.body.title || "",
+    };
+
+    try {
+      const userWithNewBook = await createBook(book);
+
+      if (userWithNewBook instanceof Error) {
+        return next(userWithNewBook);
+      }
+
+      return res.status(201).json({ books: userWithNewBook.books });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 
 router.patch(
   "/:id/books/:bookId",
+  isValidObjectId,
   getUserMiddleware,
   async function patchBookRequest(req, res, next) {
     const { user } = req;
@@ -70,6 +75,7 @@ router.patch(
 
 router.delete(
   "/:id/books/:bookId",
+  isValidObjectId,
   getUserMiddleware,
   async function deleteBookRequest(req, res, next) {
     const { bookId } = req.params;
