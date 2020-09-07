@@ -1,10 +1,11 @@
 {
-  "name": "Youtube Scrapbook React Application",
+  "name": "youtube-scrapbook-react",
   "version": "0.1.0",
   "private": false,
   "repository": {
     "url": "https://github.com/jaredjgebel/youtube-scrapbook/tree/master/client"
   },
+  "license": "MIT",
   "dependencies": {
     "@auth0/auth0-react": "^1.0.0",
     "@chakra-ui/core": "^0.8.0",
