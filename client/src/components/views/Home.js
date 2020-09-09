@@ -4,15 +4,19 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Home = () => {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const { getAccessTokenSilently } = useAuth0();
 
+  let token;
+  getAccessTokenSilently()
+    .then((retrievedToken) => (token = retrievedToken))
+    .catch((err) => setError(err));
+
   useEffect(() => {
     const getUser = async () => {
       try {
-        const token = await getAccessTokenSilently();
-
         const response = await fetch(
           `${apiUrl}/api/v1/users/5f48590c3f5db678fc503678`,
           {
@@ -23,20 +27,20 @@ const Home = () => {
           }
         );
 
-        return await response.json();
+        const json = await response.json();
+
+        if (json.error) {
+          throw new Error(json.error);
+        }
+
+        setUser(json.user);
       } catch (error) {
-        console.log(error);
+        setError(error);
       }
     };
 
-    let userData;
-    const fetchData = async () => {
-      userData = await getUser();
-      setUser(userData);
-    };
-
-    fetchData();
-  }, []);
+    getUser();
+  }, [apiUrl, token]);
 
   return (
     <Flex direction="column">
@@ -44,9 +48,12 @@ const Home = () => {
       {user && (
         <Flex direction="column">
           <p>
-            {user.user.firstName} {user.user.lastName}
+            {user.firstName} {user.lastName}
           </p>
         </Flex>
+      )}
+      {error && (
+        <p>Error loading your books, please refresh the page to try again.</p>
       )}
     </Flex>
   );
