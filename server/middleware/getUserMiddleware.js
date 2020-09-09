@@ -16,7 +16,7 @@ const getUserMiddleware = async function runUserMiddleware(req, res, next) {
     return res.status(500).json("Internal database error");
   }
 
-  req.user = user;
+  req.databaseUser = user;
   next();
 };
 

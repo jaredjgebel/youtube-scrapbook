@@ -1,4 +1,5 @@
 const express = require("express");
+const jwtAuthz = require("express-jwt-authz");
 
 const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
@@ -7,6 +8,7 @@ const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
   "/:id/books/:bookId",
+  jwtAuthz(["read:books"]),
   isValidObjectId,
   getUserMiddleware,
   function getBookRequest(req, res) {
@@ -25,7 +27,7 @@ router.post(
   getUserMiddleware,
   async function postBookRequest(req, res, next) {
     const book = {
-      userId: req.user._id,
+      userId: req.databaseUser._id,
       title: req.body.title || "",
     };
 
@@ -81,7 +83,10 @@ router.delete(
     const { bookId } = req.params;
 
     try {
-      const userWithDeletedBook = await deleteBook(req.user._id, bookId);
+      const userWithDeletedBook = await deleteBook(
+        req.databaseUser._id,
+        bookId
+      );
 
       if (userWithDeletedBook instanceof Error) {
         return next(userWithDeletedBook);

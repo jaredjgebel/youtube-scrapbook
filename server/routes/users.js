@@ -1,16 +1,20 @@
 const express = require("express");
+const jwtAuthz = require("express-jwt-authz");
 
 const router = express.Router();
 const { createUser, editUser, deleteUser } = require("../database/userdb");
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 const isValidObjectId = require("../middleware/idValidationMiddleware");
 
-router.get("/:id", getUserMiddleware, isValidObjectId, function getUserRequest(
-  req,
-  res
-) {
-  return res.status(200).json({ user: req.user });
-});
+router.get(
+  "/:id",
+  jwtAuthz(["read:user"]),
+  getUserMiddleware,
+  isValidObjectId,
+  function getUserRequest(req, res) {
+    return res.status(200).json({ user: req.databaseUser });
+  }
+);
 
 router.post("/", async function postUserRequest(req, res, next) {
   const user = {
@@ -38,10 +42,10 @@ router.patch(
   getUserMiddleware,
   async function patchUserRequest(req, res, next) {
     const editedUser = {
-      id: req.user.id,
-      firstName: req.body.firstName || req.user.firstName,
-      lastName: req.body.lastName || req.user.lastName,
-      email: req.body.email || req.user.email,
+      id: req.databaseUser.id,
+      firstName: req.body.firstName || req.databaseUser.firstName,
+      lastName: req.body.lastName || req.databaseUser.lastName,
+      email: req.body.email || req.databaseUser.email,
     };
 
     try {
@@ -64,7 +68,7 @@ router.delete(
   getUserMiddleware,
   async function deleteUserRequest(req, res, next) {
     try {
-      const userDeleteResponse = await deleteUser(req.user.id);
+      const userDeleteResponse = await deleteUser(req.databaseUser.id);
 
       if (userDeleteResponse instanceof Error) {
         return next(userDeleteResponse);
