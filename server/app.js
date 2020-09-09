@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const jwt = require("express-jwt");
+const jwks = require("jwks-rsa");
+const cors = require("cors");
 
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
@@ -14,13 +17,33 @@ const videosRouter = require("./routes/videos");
 const errorHelper = require("./middleware/errorHelper");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.API_PORT || 3000;
 const host = "localhost";
+
+const jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `${process.env.AUTH0_ISSUER}.well-known/jwks.json`,
+  }),
+  audience: `${process.env.AUTH0_AUDIENCE}`,
+  issuer: `${process.env.AUTH0_ISSUER}`,
+  algorithms: ["RS256"],
+});
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(jwtCheck);
 
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/users", booksRouter);
