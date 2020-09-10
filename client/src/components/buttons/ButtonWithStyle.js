@@ -6,7 +6,9 @@ const ButtonWithStyle = (props) => (
     as={Button}
     color="#493657"
     bg="#dbc7e9"
+    border="1px solid #493657"
     _hover={{ bg: "purple.100" }}
+    _focus={{ boxShadow: "0 0 0 3px #887098" }}
     {...props}
   />
 );

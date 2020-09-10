@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import { theme, ThemeProvider } from "@chakra-ui/core";
+import { theme, ThemeProvider, CSSReset } from "@chakra-ui/core";
 
 import App from "./App";
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
@@ -12,6 +12,7 @@ ReactDOM.render(
     <Router>
       <Auth0ProviderWithHistory>
         <ThemeProvider theme={theme}>
+          <CSSReset />
           <App />
         </ThemeProvider>
       </Auth0ProviderWithHistory>
