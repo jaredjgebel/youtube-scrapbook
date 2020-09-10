@@ -8,7 +8,7 @@ const Loading = () => (
     alignItems="center"
     justifyContent="center"
   >
-    <CircularProgress isIndeterminate color="#493657" size="100px" />
+    <CircularProgress isIndeterminate color="purple" size="100px" />
   </Flex>
 );
 

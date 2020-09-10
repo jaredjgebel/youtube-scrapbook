@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Flex } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Image } from "@chakra-ui/core";
+import { Flex, Image, Heading, Text } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cover from "../../images/svg/cover.svg";
 
@@ -26,6 +26,9 @@ const FrontPage = () => {
         maxWidth="900px"
         py={8}
       />
+
+      <Heading as="h1">My Youtube Scrapbook</Heading>
+
       {isAuthenticated ? (
         <LogoutButton />
       ) : (
