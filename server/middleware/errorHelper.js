@@ -1,5 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 function errorHelper(err, req, res, next) {
+  // if header was already set when error was thrown
+  if (res.headersSent) {
+    return next();
+  }
+
   if (err._message) {
     return res.status(400).json({ error: err.errors });
   }

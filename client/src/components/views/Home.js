@@ -17,15 +17,12 @@ const Home = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await fetch(
-          `${apiUrl}/api/v1/users/5f48590c3f5db678fc503678`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${apiUrl}/api/v1/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        });
 
         const json = await response.json();
 
@@ -50,6 +47,9 @@ const Home = () => {
           <p>
             {user.firstName} {user.lastName}
           </p>
+          {user.books.map((book) => (
+            <p>{book.title}</p>
+          ))}
         </Flex>
       )}
       {error && (

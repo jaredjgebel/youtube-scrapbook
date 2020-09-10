@@ -10,7 +10,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  authId: {
+    type: String,
+    required: true,
+  },
   books: {
     type: [bookSchema],
   },

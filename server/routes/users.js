@@ -7,10 +7,9 @@ const getUserMiddleware = require("../middleware/getUserMiddleware");
 const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
-  "/:id",
+  "/",
   jwtAuthz(["read:user"]),
   getUserMiddleware,
-  isValidObjectId,
   function getUserRequest(req, res) {
     return res.status(200).json({ user: req.databaseUser });
   }
