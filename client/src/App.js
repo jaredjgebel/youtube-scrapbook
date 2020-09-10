@@ -9,6 +9,7 @@ import LogoutButton from "./components/buttons/LogoutButton";
 import FrontPage from "./components/views/FrontPage";
 import Home from "./components/views/Home";
 import Profile from "./components/views/Profile";
+import Loading from "./components/views/Loading";
 
 const App = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -16,7 +17,7 @@ const App = () => {
   return (
     <Flex>
       {isLoading ? (
-        "Loading..."
+        <Loading />
       ) : (
         <Flex direction="column">
           {isAuthenticated ? <LogoutButton /> : <LoginButton />}

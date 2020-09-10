@@ -1,9 +1,10 @@
 import React from "react";
-import { Flex } from "@chakra-ui/core";
+import { Flex, Image } from "@chakra-ui/core";
+import Cover from "../../images/svg/cover.svg";
 
 const FrontPage = () => (
   <Flex>
-    <p>Front Page</p>
+    <Image src={Cover} alt="Youtube Scrapbook Cover Image" />
   </Flex>
 );
 
