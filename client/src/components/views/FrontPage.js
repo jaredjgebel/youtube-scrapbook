@@ -1,43 +1,73 @@
 import React from "react";
-import { Flex, Image, Heading, Text } from "@chakra-ui/core";
+import { Box, Flex, Grid, Image, Heading } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cover from "../../images/svg/cover.svg";
 
 import LoginButton from "../buttons/LoginButton";
 import LogoutButton from "../buttons/LogoutButton";
 import SignupButton from "../buttons/SignupButton";
+import ObjectPositionFitQuery from "../utils/ObjectPositionFitQuery";
 
 const FrontPage = () => {
   const { isAuthenticated } = useAuth0();
 
   return (
-    <Flex
+    <Grid
       className="front-page-container"
-      direction="column"
-      minHeight="100vh"
-      minWidth="90vw"
-      alignItems="center"
-      justifyContent="space-around"
+      height="100vh"
+      maxH="100vh"
+      width="100%"
+      gridTemplateColumns="repeat(6, 1fr)"
+      gridTemplateRows="repeat(6, 1fr)"
+      gridTemplateAreas={`"lt-image lt-image lt-image lt-image lt-image lt-image"
+      "lt-image lt-image lt-image lt-image lt-image lt-image"
+      "lt-image lt-image lt-image lt-image lt-image lt-image"
+      "lt-image lt-image lt-image lt-image lt-image lt-image"
+      "lt-heading lt-heading lt-heading lt-heading lt-heading lt-heading"
+      "lt-buttons lt-buttons lt-buttons lt-buttons lt-buttons lt-buttons"`}
     >
-      <Image
-        src={Cover}
-        alt="Youtube Scrapbook Cover Image"
-        width="85%"
-        maxWidth="900px"
-        py={8}
-      />
+      <Flex
+        gridArea="lt-image"
+        alignItems="stretch"
+        justifyContent="space-around"
+      >
+        <ObjectPositionFitQuery>
+          <Image
+            src={Cover}
+            alt="Youtube Scrapbook Cover Image"
+            objectFit="inherit"
+            objectPosition="inherit"
+            maxH="100%"
+            maxW="100%"
+          />
+        </ObjectPositionFitQuery>
+      </Flex>
 
-      <Heading as="h1">My Youtube Scrapbook</Heading>
+      <Flex gridArea="lt-heading" alignItems="center" justifyContent="center">
+        <Heading
+          as="h1"
+          fontSize={["32px", "32px", "32px", "48px"]}
+          color="gray.700"
+        >
+          My Youtube Scrapbook
+        </Heading>
+      </Flex>
 
       {isAuthenticated ? (
-        <LogoutButton />
+        <Flex alignItems="center" justifyContent="center" gridArea="lt-buttons">
+          <LogoutButton />
+        </Flex>
       ) : (
-        <Flex width="40%" justifyContent="space-around">
+        <Flex
+          alignItems="center"
+          justifyContent="space-around"
+          gridArea="lt-buttons"
+        >
           <LoginButton />
           <SignupButton />
         </Flex>
       )}
-    </Flex>
+    </Grid>
   );
 };
 

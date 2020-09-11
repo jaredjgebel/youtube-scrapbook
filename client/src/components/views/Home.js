@@ -47,8 +47,8 @@ const Home = () => {
           <p>
             {user.firstName} {user.lastName}
           </p>
-          {user.books.map((book) => (
-            <p>{book.title}</p>
+          {user.books.map((book, i) => (
+            <p key={i}>{book.title}</p>
           ))}
         </Flex>
       )}
