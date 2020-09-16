@@ -1,5 +1,4 @@
 const express = require("express");
-const jwtAuthz = require("express-jwt-authz");
 
 const router = express.Router();
 const getUserMiddleware = require("../middleware/getUserMiddleware");
@@ -8,7 +7,6 @@ const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
   "/:id/books/:bookId",
-  jwtAuthz(["read:books"]),
   isValidObjectId,
   getUserMiddleware,
   function getBookRequest(req, res) {

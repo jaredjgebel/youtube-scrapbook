@@ -1,25 +1,20 @@
 const express = require("express");
-const jwtAuthz = require("express-jwt-authz");
 
 const router = express.Router();
 const { createUser, editUser, deleteUser } = require("../database/userdb");
 const getUserMiddleware = require("../middleware/getUserMiddleware");
 const isValidObjectId = require("../middleware/idValidationMiddleware");
 
-router.get(
-  "/",
-  jwtAuthz(["read:user"]),
-  getUserMiddleware,
-  function getUserRequest(req, res) {
-    return res.status(200).json({ user: req.databaseUser });
-  }
-);
+router.get("/", getUserMiddleware, function getUserRequest(req, res) {
+  return res.status(200).json({ user: req.databaseUser });
+});
 
 router.post("/", async function postUserRequest(req, res, next) {
   const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
+    authId: req.body.authId,
   };
 
   try {

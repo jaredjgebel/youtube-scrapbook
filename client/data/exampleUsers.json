@@ -3,6 +3,7 @@
     "firstName": "Jayson",
     "lastName": "Drewett",
     "email": "jdrewett0@cloudflare.com",
+    "authId": "auth0|5f58f4afddb1ba00773424aa",
     "books": [
       {
         "id": "5ee82783fc13ae15a2000000",
@@ -49,6 +50,7 @@
     "firstName": "Annnora",
     "lastName": "Gribbins",
     "email": "agribbins1@wunderground.com",
+    "authId": "auth0|5f58f4afddb1ba00773424ab",
     "books": [
       {
         "id": "5ee82783fc13ae15a2000007",
@@ -111,6 +113,7 @@
     "firstName": "Avivah",
     "lastName": "Langlands",
     "email": "alanglands2@comcast.net",
+    "authId": "auth0|5f58f4afddb1ba00773424ac",
     "books": [
       {
         "id": "5ee82783fc13ae15a2000011",
@@ -222,6 +225,7 @@
     "firstName": "Kean",
     "lastName": "Barthel",
     "email": "kbarthel3@samsung.com",
+    "authId": "auth0|5f58f4afddb1ba00773424ad",
     "books": [
       {
         "id": "5ee82783fc13ae15a2000024",
@@ -290,6 +294,7 @@
     "firstName": "Owen",
     "lastName": "Sherme",
     "email": "osherme4@usa.gov",
+    "authId": "auth0|5f58f4afddb1ba00773424ae",
     "books": [
       {
         "id": "5ee82783fc13ae15a200002f",
