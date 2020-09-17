@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Heading } from "@chakra-ui/core";
+import { Flex, Heading, SimpleGrid } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Book from "../book/Book";
@@ -42,19 +42,22 @@ const Home = () => {
   }, [apiUrl, token]);
 
   return (
-    <Flex direction="column" minHeight="100vh">
-      <Heading as="h1">Books</Heading>
+    <Flex
+      direction="column"
+      alignItems="center"
+      minHeight="100vh"
+      width={["300px", "480px", "650px", "900px"]}
+      paddingTop={8}
+    >
+      <Heading as="h1" paddingBottom={6}>
+        Books
+      </Heading>
       {user && (
-        <Flex direction="column">
+        <SimpleGrid columns={[1, 1, 2, 3]} spacing={[6, 6, 8, 8]}>
           {user.books.map((book, i) => (
-            <div key={i}>
-              <Book />
-              <Heading as="h2" fontSize="20px" key={i}>
-                {book.title}
-              </Heading>
-            </div>
+            <Book key={i} title={book.title} />
           ))}
-        </Flex>
+        </SimpleGrid>
       )}
       {error && (
         <p>Error loading your books, please refresh the page to try again.</p>

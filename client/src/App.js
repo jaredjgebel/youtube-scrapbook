@@ -17,7 +17,7 @@ const App = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <Flex direction="column" alignItems="center" width="100%">
+        <Flex direction="column" alignItems="center" width="100%" height="100%">
           <Switch>
             <Route path="/" exact component={FrontPage} />
             <PrivateRoute path="/books" component={Home} />
