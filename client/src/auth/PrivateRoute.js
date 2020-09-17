@@ -6,6 +6,7 @@ const PrivateRoute = ({ component, ...args }) => (
   <Route
     component={withAuthenticationRequired(component, {
       onRedirecting: () => <p>"Loading..."</p>,
+      returnTo: "/books",
     })}
     {...args}
   />

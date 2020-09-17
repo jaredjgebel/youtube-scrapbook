@@ -5,7 +5,7 @@ import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import * as serviceWorker from "./serviceWorker";
 
 import App from "./App";
-import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
+import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
 import theme from "./themes/themes";
 
 ReactDOM.render(
