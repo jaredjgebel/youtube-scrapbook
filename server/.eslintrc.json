@@ -15,7 +15,7 @@
   },
   "overrides": [
     {
-      "files": ["test/**/**.test.js", "test/**.js"],
+      "files": ["test/**/**.test.js", "test/**.js", "notes/**.js"],
       "rules": {
         "no-undef": "off",
         "no-unused-expressions": "off",

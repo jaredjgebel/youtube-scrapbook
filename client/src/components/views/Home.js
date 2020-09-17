@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Flex } from "@chakra-ui/core";
+import { Flex, Heading } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import Book from "../book/Book";
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -40,15 +42,17 @@ const Home = () => {
   }, [apiUrl, token]);
 
   return (
-    <Flex direction="column">
-      <p>Home</p>
+    <Flex direction="column" minHeight="100vh">
+      <Heading as="h1">Books</Heading>
       {user && (
         <Flex direction="column">
-          <p>
-            {user.firstName} {user.lastName}
-          </p>
           {user.books.map((book, i) => (
-            <p key={i}>{book.title}</p>
+            <div key={i}>
+              <Book />
+              <Heading as="h2" fontSize="20px" key={i}>
+                {book.title}
+              </Heading>
+            </div>
           ))}
         </Flex>
       )}
