@@ -1,18 +1,12 @@
 import React from "react";
 import { Icon, PseudoBox } from "@chakra-ui/core";
 
-const Book = (props) => {
+const BookIcon = (props) => {
   return (
-    <PseudoBox
-      as={Icon}
-      role="img"
-      name="book"
-      color="purple.900"
-      _hover={{ color: "purple.200" }}
-      _focus={{ boxShadow: "0 0 0 3px #76598c" }}
-      {...props}
-    />
+    <PseudoBox _groupHover={{ color: "purple.500" }}>
+      <Icon name="book" color="currentColor" {...props} />
+    </PseudoBox>
   );
 };
 
-export default Book;
+export default BookIcon;

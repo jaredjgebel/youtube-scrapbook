@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Heading, SimpleGrid } from "@chakra-ui/core";
+import { Flex, Heading, PseudoBox, SimpleGrid } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Book from "../book/Book";
@@ -49,13 +49,13 @@ const Home = () => {
       width={["300px", "480px", "650px", "900px"]}
       paddingTop={8}
     >
-      <Heading as="h1" paddingBottom={6}>
+      <Heading as="h1" paddingBottom={[6, 6, 12, 16]}>
         Books
       </Heading>
       {user && (
         <SimpleGrid columns={[1, 1, 2, 3]} spacing={[6, 6, 8, 8]}>
           {user.books.map((book, i) => (
-            <Book key={i} title={book.title} />
+            <Book key={i} title={book.title} color="currentColor" />
           ))}
         </SimpleGrid>
       )}
