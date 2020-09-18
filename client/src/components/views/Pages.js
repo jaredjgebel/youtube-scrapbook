@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Flex, IconButton } from "@chakra-ui/core";
+import { Box, Flex, IconButton } from "@chakra-ui/core";
 
 import Page from "../views/Page";
 import UserContext from "../contexts/UserContext";
@@ -15,12 +15,23 @@ const Pages = (props) => {
   const [visible, setVisible] = useState(book.pages[0].number);
 
   return (
-    <>
+    <Flex
+      className="flex-container"
+      direction="column"
+      justifyContent="stretch"
+      width="100%"
+    >
       {book.pages.map((page, i) => {
         return (
-          <Flex key={i}>
-            {visible === page.number ? (
-              <>
+          <Box key={i} height="100%" width="100%">
+            {visible === page.number && (
+              <Flex
+                className="page-container"
+                alignItems="flex-end"
+                justifyContent="space-between"
+                width="100%"
+                minHeight="90vh"
+              >
                 <IconButton
                   aria-label="Previous page"
                   icon="arrow-left"
@@ -29,7 +40,7 @@ const Pages = (props) => {
                   isDisabled={page.number === 1}
                   onClick={() => setVisible(page.number - 1)}
                 />
-                <Page number={page.number} videos={page.videos} />
+                <Page number={page.number} videos={page.videos} height="100%" />
                 <IconButton
                   aria-label="Next page"
                   icon="arrow-right"
@@ -38,16 +49,12 @@ const Pages = (props) => {
                   isDisabled={page.number === book.pages.length}
                   onClick={() => setVisible(page.number + 1)}
                 />
-              </>
-            ) : (
-              <div style={{ display: "none" }}>
-                <Page number={page.number} videos={page.videos} />
-              </div>
+              </Flex>
             )}
-          </Flex>
+          </Box>
         );
       })}
-    </>
+    </Flex>
   );
 };
 
