@@ -12,11 +12,12 @@ const Book = ({ title }) => (
     alignItems="center"
     padding="15px 15px"
     tabIndex={0}
+    borderRadius="5px"
     _focus={{
       boxShadow: "0 0 1px 4px #76598c",
       outline: "none",
-      borderRadius: "5px",
     }}
+    _active={{ backgroundColor: "#ceb7b1" }}
   >
     <BookIcon size={["72px", "84px", "96px", "110px"]} paddingBottom="12px" />
     <Heading

@@ -3,7 +3,10 @@ import { Icon, PseudoBox } from "@chakra-ui/core";
 
 const BookIcon = (props) => {
   return (
-    <PseudoBox _groupHover={{ color: "purple.500" }}>
+    <PseudoBox
+      _groupHover={{ color: "purple.500" }}
+      _active={{ color: "purple.700" }}
+    >
       <Icon name="book" color="currentColor" focusable {...props} />
     </PseudoBox>
   );
