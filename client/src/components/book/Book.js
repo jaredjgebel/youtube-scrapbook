@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Heading, Icon, PseudoBox } from "@chakra-ui/core";
+import { Flex, Heading, PseudoBox } from "@chakra-ui/core";
 
 import BookIcon from "../book/BookIcon";
 

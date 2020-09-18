@@ -1,12 +1,14 @@
 import React from "react";
-import { Box, Flex, Grid, Image, Heading } from "@chakra-ui/core";
+import { Flex, Grid, Image, Heading } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
-import Cover from "../../images/svg/cover.svg";
+import { Link } from "react-router-dom";
 
 import LoginButton from "../buttons/LoginButton";
 import LogoutButton from "../buttons/LogoutButton";
 import SignupButton from "../buttons/SignupButton";
+import ButtonWithStyle from "../buttons/ButtonWithStyle";
 import ObjectPositionFitQuery from "../utils/ObjectPositionFitQuery";
+import Cover from "../../images/svg/cover.svg";
 
 const FrontPage = () => {
   const { isAuthenticated } = useAuth0();
@@ -54,7 +56,14 @@ const FrontPage = () => {
       </Flex>
 
       {isAuthenticated ? (
-        <Flex alignItems="center" justifyContent="center" gridArea="lt-buttons">
+        <Flex
+          alignItems="center"
+          justifyContent="space-around"
+          gridArea="lt-buttons"
+        >
+          <Link to="/books">
+            <ButtonWithStyle>Enter</ButtonWithStyle>
+          </Link>
           <LogoutButton />
         </Flex>
       ) : (

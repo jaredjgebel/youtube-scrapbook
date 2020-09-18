@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Heading, PseudoBox, SimpleGrid } from "@chakra-ui/core";
+import { Flex, Heading, SimpleGrid } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Book from "../book/Book";
+import AddButton from "../buttons/AddButton";
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -57,6 +58,9 @@ const Home = () => {
           {user.books.map((book, i) => (
             <Book key={i} title={book.title} color="currentColor" />
           ))}
+          <Flex alignItems="center" justifyContent="center">
+            <AddButton />
+          </Flex>
         </SimpleGrid>
       )}
       {error && (
