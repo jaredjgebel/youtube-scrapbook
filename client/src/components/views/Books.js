@@ -31,7 +31,7 @@ const Books = ({ books }) => {
 
               <SimpleGrid columns={[1, 1, 2, 3]} spacing={[6, 6, 8, 8]}>
                 {books.map((book, i) => (
-                  <Link to={`${url}${book.id}`} key={i}>
+                  <Link to={`${url}/${book.id}`} key={i}>
                     <Book title={book.title} color="currentColor" />
                   </Link>
                 ))}

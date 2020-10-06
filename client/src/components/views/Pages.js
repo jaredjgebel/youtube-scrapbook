@@ -1,4 +1,6 @@
 import React, { Fragment, useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { IconButton } from "@chakra-ui/core";
 
 import Page from "./Page";
 import UserContext from "../contexts/UserContext";
@@ -15,6 +17,15 @@ const Pages = (props) => {
 
   return (
     <>
+      <Link to="/books">
+        <IconButton
+          icon="arrow-back"
+          isRound
+          aria-label="Back to Books"
+          style={{ position: "absolute", top: "5px", left: "5px" }}
+        />
+      </Link>
+
       {book.pages.map((page, i) => {
         return (
           <Fragment key={i}>
@@ -23,7 +34,6 @@ const Pages = (props) => {
                 number={page.number}
                 video={page.videos[0]}
                 pageCount={book.pages.length}
-                visible={visible}
                 setVisible={setVisible}
               />
             )}
