@@ -46,9 +46,9 @@ const Home = () => {
     <Flex
       direction="column"
       alignItems="center"
-      minHeight="100vh"
-      width={["300px", "480px", "650px", "900px"]}
-      paddingTop={8}
+      justifyContent="center"
+      width="100%"
+      height="100%"
     >
       {user && (
         <UserContext.Provider value={user}>

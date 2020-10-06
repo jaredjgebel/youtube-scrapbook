@@ -13,11 +13,16 @@ const App = () => {
   const { isLoading } = useAuth0();
 
   return (
-    <Flex backgroundColor="#f0e9e7">
+    <Flex backgroundColor="#f0e9e7" height="100vh" width="100vw">
       {isLoading ? (
         <Loading />
       ) : (
-        <Flex direction="column" alignItems="center" width="100%" height="100%">
+        <Flex
+          direction="column"
+          justifyContent="center"
+          width="100%"
+          height="100vh"
+        >
           <Switch>
             <PrivateRoute path="/books" component={Home} />
             <PrivateRoute path="/profile" component={Profile} />

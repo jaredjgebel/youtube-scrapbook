@@ -18,7 +18,7 @@ const FrontPage = () => {
       className="front-page-container"
       height="100vh"
       maxH="100vh"
-      width="100%"
+      width="95vw"
       gridTemplateColumns="repeat(6, 1fr)"
       gridTemplateRows="repeat(6, 1fr)"
       gridTemplateAreas={`"lt-image lt-image lt-image lt-image lt-image lt-image"

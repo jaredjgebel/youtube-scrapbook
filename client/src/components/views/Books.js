@@ -19,21 +19,28 @@ const Books = ({ books }) => {
       ) : (
         <Switch>
           <Route exact path={path}>
-            <Heading as="h1" paddingBottom={[6, 6, 12, 16]}>
-              Books
-            </Heading>
+            <Flex
+              direction="column"
+              alignItems="center"
+              minHeight="100vh"
+              paddingTop={8}
+            >
+              <Heading as="h1" paddingBottom={[6, 6, 12, 16]}>
+                Books
+              </Heading>
 
-            <SimpleGrid columns={[1, 1, 2, 3]} spacing={[6, 6, 8, 8]}>
-              {books.map((book, i) => (
-                <Link to={`${url}${book.id}`} key={i}>
-                  <Book title={book.title} color="currentColor" />
-                </Link>
-              ))}
+              <SimpleGrid columns={[1, 1, 2, 3]} spacing={[6, 6, 8, 8]}>
+                {books.map((book, i) => (
+                  <Link to={`${url}${book.id}`} key={i}>
+                    <Book title={book.title} color="currentColor" />
+                  </Link>
+                ))}
 
-              <Flex alignItems="center" justifyContent="center">
-                <AddButton />
-              </Flex>
-            </SimpleGrid>
+                <Flex alignItems="center" justifyContent="center">
+                  <AddButton />
+                </Flex>
+              </SimpleGrid>
+            </Flex>
           </Route>
 
           <Route path={`${path}/:id`} component={Pages} />
