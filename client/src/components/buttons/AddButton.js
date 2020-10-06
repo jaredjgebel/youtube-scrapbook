@@ -1,12 +1,13 @@
 import React from "react";
 import { IconButton, PseudoBox } from "@chakra-ui/core";
 
-const AddButton = () => (
+const AddButton = (props) => (
   <PseudoBox
     _focus={{
       boxShadow: "0 0 1px 4px #76598c",
       outline: "none",
     }}
+    {...props}
   >
     <IconButton
       aria-label="Add book"

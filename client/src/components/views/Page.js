@@ -9,8 +9,8 @@ const Page = ({ number, video, pageCount, setVisible }) => (
     height="95%"
     width="95%"
     gridTemplateRows="1.2fr 1fr"
-    paddingX={[2, 4, 6, 8]}
-    paddingY={2}
+    paddingX={[0, 4, 6, 8]}
+    paddingY={1}
     boxShadow="0 0 10px gray"
     overflowY="auto"
   >
@@ -18,9 +18,9 @@ const Page = ({ number, video, pageCount, setVisible }) => (
       <ReactPlayer url={video.link} />
     </Flex>
     <Flex flexDirection="column" justifyContent="space-between">
-      <Flex flexDirection="column">
+      <Flex flexDirection="column" height="100%" justifyContent="space-between">
         <Text padding={4}>{video.notes}</Text>
-        <Flex justifyContent="space-around">
+        <Flex justifyContent="center">
           <ButtonWithStyle
             margin={2}
             width={["100px", "100px", "100px", "125px"]}
@@ -49,7 +49,6 @@ const Page = ({ number, video, pageCount, setVisible }) => (
           icon="arrow-right"
           isRound
           variant="outline"
-          isDisabled={number === pageCount}
           onClick={() => setVisible(number + 1)}
         />
       </Flex>
