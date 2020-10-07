@@ -10,7 +10,7 @@ const AddButton = (props) => (
     {...props}
   >
     <IconButton
-      aria-label="Add book"
+      aria-label={props.ariaLabel}
       icon="add"
       variant="outline"
       isRound

@@ -37,7 +37,7 @@ const Books = ({ books }) => {
                 ))}
 
                 <Flex alignItems="center" justifyContent="center">
-                  <AddButton />
+                  <AddButton ariaLabel="Add new book" />
                 </Flex>
               </SimpleGrid>
             </Flex>

@@ -38,6 +38,7 @@ const Pages = (props) => {
       {visible === blankPageIndex && (
         <Flex
           height="95%"
+          maxHeight="95%"
           width="95%"
           alignItems="flex-end"
           justifyContent="flex-start"
@@ -53,7 +54,11 @@ const Pages = (props) => {
             variant="outline"
             onClick={() => setVisible(blankPageIndex - 1)}
           />
-          <AddButton alignSelf="center" marginLeft={`calc(50% - 60px)`} />
+          <AddButton
+            alignSelf="center"
+            marginLeft={`calc(50% - 60px)`}
+            ariaLabel="Add new page"
+          />
         </Flex>
       )}
     </Fragment>
