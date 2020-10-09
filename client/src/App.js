@@ -13,7 +13,7 @@ const App = () => {
   const { isLoading } = useAuth0();
 
   return (
-    <Flex backgroundColor="#f0e9e7" height="100vh" width="100vw">
+    <Flex backgroundColor="#f0e9e7">
       {isLoading ? (
         <Loading />
       ) : (
@@ -21,7 +21,7 @@ const App = () => {
           direction="column"
           justifyContent="center"
           width="100%"
-          height="100vh"
+          minH="100vh"
         >
           <Switch>
             <PrivateRoute path="/books" component={Home} />

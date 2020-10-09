@@ -10,8 +10,9 @@ const Book = ({ title }) => (
     cursor="pointer"
     direction="column"
     alignItems="center"
-    padding="15px 15px"
     tabIndex={0}
+    paddingX={[5, 8]}
+    paddingY={3}
     borderRadius="5px"
     _focus={{
       boxShadow: "0 0 1px 4px #76598c",

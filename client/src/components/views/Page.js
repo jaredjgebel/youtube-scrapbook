@@ -1,6 +1,6 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { Flex, Grid, SimpleGrid, IconButton, Text } from "@chakra-ui/core";
+import { Flex, Grid, IconButton, Text } from "@chakra-ui/core";
 import ButtonWithStyle from "../buttons/ButtonWithStyle";
 
 const Page = ({ number, video, setVisible }) => (
@@ -50,6 +50,7 @@ const Page = ({ number, video, setVisible }) => (
           isDisabled={number === 1}
           onClick={() => setVisible(number - 1)}
         />
+
         <ButtonWithStyle width={["100px", "100px", "100px", "125px"]}>
           Edit
         </ButtonWithStyle>
@@ -57,6 +58,7 @@ const Page = ({ number, video, setVisible }) => (
         <ButtonWithStyle width={["100px", "100px", "100px", "125px"]}>
           Delete
         </ButtonWithStyle>
+
         <IconButton
           aria-label="Next page"
           icon="arrow-right"

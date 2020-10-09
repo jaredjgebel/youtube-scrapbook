@@ -7,7 +7,7 @@ const BookIcon = (props) => {
       _groupHover={{ color: "purple.500" }}
       _active={{ color: "purple.700" }}
     >
-      <Icon name="book" color="currentColor" focusable {...props} />
+      <Icon name="book" color="currentColor" {...props} />
     </PseudoBox>
   );
 };
