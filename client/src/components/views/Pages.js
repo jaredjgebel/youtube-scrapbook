@@ -5,6 +5,7 @@ import { Flex, IconButton } from "@chakra-ui/core";
 import Page from "./Page";
 import AddButton from "../buttons/AddButton";
 import UserContext from "../contexts/UserContext";
+import IconWithStyle from "../buttons/IconWithStyle";
 
 const Pages = (props) => {
   const user = useContext(UserContext);
@@ -67,7 +68,7 @@ const Pages = (props) => {
   return (
     <>
       <Link to="/books">
-        <IconButton
+        <IconWithStyle
           icon="arrow-back"
           isRound
           aria-label="Back to Books"

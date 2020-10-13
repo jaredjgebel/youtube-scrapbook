@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  PseudoBox,
-  SimpleGrid,
-} from "@chakra-ui/core";
+import { Box, Flex, Heading, PseudoBox, SimpleGrid } from "@chakra-ui/core";
 import { useRouteMatch, Link, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
