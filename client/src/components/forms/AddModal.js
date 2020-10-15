@@ -10,46 +10,14 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/core";
-import { useMutation, useQueryCache } from "react-query";
-import { useAuth0 } from "@auth0/auth0-react";
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
-const createBook = async ({ title, token }) => {
-  const response = await fetch(`${apiUrl}/api/v1/books`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({ title }),
-  });
-
-  const json = await response.json();
-
-  return json.error ? json.error : { books: json.books };
-};
+import useCreateBook from "../hooks/useCreateBook";
 
 const AddModal = ({ isOpen, onClose }) => {
   const [input, setInput] = useState("");
   const handleChange = (event) => setInput(event.target.value);
 
-  const queryCache = useQueryCache();
-
-  const { getAccessTokenSilently } = useAuth0();
-
-  let token;
-  getAccessTokenSilently()
-    .then((retrievedToken) => (token = retrievedToken))
-    .catch((err) => console.error(err));
-
-  const [mutate] = useMutation(createBook, {
-    // refetches user query to include new book
-    onSuccess: () => {
-      queryCache.invalidateQueries("user");
-    },
-  });
+  const createBook = useCreateBook();
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -78,7 +46,7 @@ const AddModal = ({ isOpen, onClose }) => {
                 e.preventDefault();
 
                 try {
-                  await mutate({ title: input, token });
+                  await createBook(input);
                 } catch (error) {
                   console.error(error);
                 }

@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Flex } from "@chakra-ui/core";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import Books from "./Books";
 import Loading from "../views/Loading";
 import UserContext from "../contexts/UserContext";
 import useUser from "../hooks/useUser";
+import useAccessToken from "../hooks/useAccessToken";
 
 const Home = () => {
-  const [token, setToken] = useState(null);
-  const [authError, setAuthError] = useState(null);
-
-  const { getAccessTokenSilently } = useAuth0();
-
-  getAccessTokenSilently()
-    .then((retrievedToken) => setToken(retrievedToken))
-    .catch((err) => {
-      setAuthError(err);
-    });
+  const { token, authError } = useAccessToken() || {};
 
   const { data, error, isFetching } = useUser(token);
 
@@ -47,6 +38,7 @@ const Home = () => {
               </p>
             )}
           </>
+          <>{authError && <p>Please log in to access this page.</p>}</>
         </>
       )}
     </Flex>
