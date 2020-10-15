@@ -6,16 +6,20 @@ import Page from "./Page";
 import AddButton from "../buttons/AddButton";
 import UserContext from "../contexts/UserContext";
 import IconWithStyle from "../buttons/IconWithStyle";
+import Loading from "./Loading";
 
 const Pages = (props) => {
   const user = useContext(UserContext);
+  const [visible, setVisible] = useState(1);
 
   const book =
     user &&
     user.books &&
-    user.books.find((book) => book.id === props.match.params.id);
+    user.books.find((book) => book._id === props.match.params.id);
 
-  const [visible, setVisible] = useState(book.pages[0].number);
+  if (!book) {
+    return <Loading />;
+  }
 
   const pages = book.pages.map((page, i) => {
     return (
@@ -53,6 +57,7 @@ const Pages = (props) => {
             icon="arrow-left"
             isRound
             variant="outline"
+            isDisabled={blankPageIndex === 1}
             onClick={() => setVisible(blankPageIndex - 1)}
           />
           <AddButton

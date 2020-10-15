@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Flex, Heading, PseudoBox, SimpleGrid } from "@chakra-ui/core";
+import {
+  Box,
+  Flex,
+  Heading,
+  PseudoBox,
+  SimpleGrid,
+  useDisclosure,
+} from "@chakra-ui/core";
 import { useRouteMatch, Link, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -8,6 +15,32 @@ import AddButton from "../buttons/AddButton";
 import Loading from "./Loading";
 import Pages from "./Pages";
 import IconWithStyle from "../buttons/IconWithStyle";
+import AddModal from "../forms/AddModal";
+
+const AddBook = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <Flex alignItems="center" justifyContent="center" paddingY={4}>
+      <AddButton ariaLabel="Add new book" onClick={onOpen} />
+      <AddModal isOpen={isOpen} onClose={onClose} />
+    </Flex>
+  );
+};
+
+const EditBook = () => (
+  <Box
+    className="relative-position"
+    position="relative"
+    left="90%"
+    bottom="100%"
+    width="50px"
+  >
+    <IconWithStyle icon="edit" isRound position="absolute" />
+
+    <IconWithStyle icon="delete" isRound position="absolute" top="45px" />
+  </Box>
+);
 
 const Books = ({ books }) => {
   const { url, path } = useRouteMatch();
@@ -55,7 +88,7 @@ const Books = ({ books }) => {
                         }}
                         _active={{ backgroundColor: "#ceb7b1" }}
                       >
-                        <Link to={`${url}/${book.id}`}>
+                        <Link to={`${url}/${book._id}`}>
                           <Flex
                             direction="column"
                             alignItems="center"
@@ -77,28 +110,11 @@ const Books = ({ books }) => {
                       </PseudoBox>
                     </Flex>
 
-                    <Box
-                      className="relative-position"
-                      position="relative"
-                      left="90%"
-                      bottom="100%"
-                      width="50px"
-                    >
-                      <IconWithStyle icon="edit" isRound position="absolute" />
-
-                      <IconWithStyle
-                        icon="delete"
-                        isRound
-                        position="absolute"
-                        top="45px"
-                      />
-                    </Box>
+                    <EditBook />
                   </Box>
                 ))}
 
-                <Flex alignItems="center" justifyContent="center" paddingY={4}>
-                  <AddButton ariaLabel="Add new book" />
-                </Flex>
+                <AddBook />
               </SimpleGrid>
             </Flex>
           </Route>

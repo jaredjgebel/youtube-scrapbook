@@ -6,7 +6,7 @@ const { createBook, editBook, deleteBook } = require("../database/bookdb");
 const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
-  "/:id/books/:bookId",
+  "/books/:bookId",
   isValidObjectId,
   getUserMiddleware,
   function getBookRequest(req, res) {
@@ -20,10 +20,11 @@ router.get(
 );
 
 router.post(
-  "/:id/books",
+  "/books",
   isValidObjectId,
   getUserMiddleware,
   async function postBookRequest(req, res, next) {
+    console.log("req.body", req.body);
     const book = {
       userId: req.databaseUser._id,
       title: req.body.title || "",
@@ -44,7 +45,7 @@ router.post(
 );
 
 router.patch(
-  "/:id/books/:bookId",
+  "/books/:bookId",
   isValidObjectId,
   getUserMiddleware,
   async function patchBookRequest(req, res, next) {
@@ -74,7 +75,7 @@ router.patch(
 );
 
 router.delete(
-  "/:id/books/:bookId",
+  "/books/:bookId",
   isValidObjectId,
   getUserMiddleware,
   async function deleteBookRequest(req, res, next) {

@@ -47,9 +47,9 @@ app.use(
 app.use(jwtCheck);
 
 app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/users", booksRouter);
-app.use("/api/v1/users", pagesRouter);
-app.use("/api/v1/users", videosRouter);
+app.use("/api/v1", booksRouter);
+app.use("/api/v1", pagesRouter);
+app.use("/api/v1", videosRouter);
 
 app.use(errorHelper);
 
