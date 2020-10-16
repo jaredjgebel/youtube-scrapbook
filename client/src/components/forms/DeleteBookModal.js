@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Text,
 } from "@chakra-ui/core";
 
 import useDeleteBook from "../hooks/useDeleteBook";
@@ -23,7 +24,9 @@ const DeleteBookModal = ({ id, isOpen, onClose }) => {
         <ModalCloseButton />
         <form className="add-book-form">
           <ModalBody>
-            <p>Are you sure you want to delete your book?</p>
+            <Text fontSize="sm">
+              Are you sure you want to delete your book?
+            </Text>
           </ModalBody>
 
           <ModalFooter>

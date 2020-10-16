@@ -50,4 +50,16 @@ export default {
     ...theme.icons,
     ...customIcons,
   },
+  fontSizes: {
+    xs: "1rem",
+    sm: "1.25rem",
+    md: "1.5rem",
+    lg: "1.75rem",
+    xl: "2rem",
+    "2xl": "3rem",
+    "3xl": "3.75rem",
+    "4xl": "4.5rem",
+    "5xl": "6rem",
+    "6xl": "8rem",
+  },
 };

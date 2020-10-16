@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Input,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -9,6 +8,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Textarea,
 } from "@chakra-ui/core";
 
 import useEditBook from "../hooks/useEditBook";
@@ -24,14 +24,26 @@ const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit your book</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton
+          onClick={() => {
+            setInput(currentTitle);
+            onClose();
+          }}
+        />
         <form className="add-book-form">
           <ModalBody>
-            <Input value={input} onChange={handleChange} />
+            <Textarea value={input} onChange={handleChange} />
           </ModalBody>
 
           <ModalFooter>
-            <Button variantColor="burgandy" onClick={onClose} marginRight={1}>
+            <Button
+              variantColor="burgandy"
+              onClick={() => {
+                setInput(currentTitle);
+                onClose();
+              }}
+              marginRight={1}
+            >
               Cancel
             </Button>
 

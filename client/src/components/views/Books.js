@@ -37,8 +37,8 @@ const EditBook = ({ id, title }) => {
     <Box
       className="relative-position"
       position="relative"
-      left="90%"
-      bottom="100%"
+      left="85%"
+      bottom="90%"
       width="50px"
     >
       <IconWithStyle icon="edit" isRound position="absolute" onClick={onOpen} />
@@ -85,15 +85,15 @@ const Books = ({ books }) => {
               direction="column"
               alignItems="center"
               paddingTop={[8, 8, 4]}
-              paddingBottom={[6, 6, 12, 16]}
+              paddingBottom={[12, 12, 12, 16]}
             >
-              <Heading as="h1" paddingBottom="2rem">
+              <Heading as="h1" paddingY="3rem" fontSize="3xl">
                 Books
               </Heading>
 
-              <SimpleGrid columns={[1, 1, 2]} spacing={[8, 8, 8, 8]}>
+              <SimpleGrid columns={[1, 1, 1, 2]} spacing={[20, 8, 8, 8]}>
                 {books.map((book, i) => (
-                  <Box key={i} marginX={[6, 24, 24, 20]} marginY={2}>
+                  <Box key={i} marginX={[6, 24, 6, 20]} marginY={2}>
                     <Flex
                       alignItems="center"
                       justifyContent="center"
@@ -107,8 +107,8 @@ const Books = ({ books }) => {
                         alignItems="center"
                         justifyContent="center"
                         tabIndex={0}
-                        paddingX={[4, 12, 8]}
-                        paddingY={3}
+                        paddingX={[4, 12]}
+                        paddingY={[3, 12]}
                         borderRadius="5px"
                         _focus={{
                           boxShadow: "0 0 1px 4px #76598c",
@@ -123,13 +123,13 @@ const Books = ({ books }) => {
                             justifyContent="center"
                           >
                             <BookIcon
-                              size={["72px", "84px", "96px", "110px"]}
+                              size={["110px", "130px"]}
                               paddingBottom="12px"
                             />
                             <Heading
                               as="h2"
                               textAlign="center"
-                              fontSize={["20px", "20px", "24px", "28px"]}
+                              fontSize={["lg", "lg", "lg", "xl"]}
                             >
                               {book.title}
                             </Heading>
