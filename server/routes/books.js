@@ -24,7 +24,6 @@ router.post(
   isValidObjectId,
   getUserMiddleware,
   async function postBookRequest(req, res, next) {
-    console.log("req.body", req.body);
     const book = {
       userId: req.databaseUser._id,
       title: req.body.title || "",
@@ -49,16 +48,16 @@ router.patch(
   isValidObjectId,
   getUserMiddleware,
   async function patchBookRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId } = req.params;
 
-    const book = user.books.id(bookId);
+    const book = databaseUser.books.id(bookId);
 
     const title = (req.body && req.body.title) || book.title;
 
     try {
       const userWithEditedBook = await editBook({
-        userId: user._id,
+        userId: databaseUser._id,
         bookId,
         title,
       });

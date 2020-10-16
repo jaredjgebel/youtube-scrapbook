@@ -15,7 +15,8 @@ import AddButton from "../buttons/AddButton";
 import Loading from "./Loading";
 import Pages from "./Pages";
 import IconWithStyle from "../buttons/IconWithStyle";
-import AddModal from "../forms/AddModal";
+import AddBookModal from "../forms/AddBookModal";
+import EditBookModal from "../forms/EditBookModal";
 
 const AddBook = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,24 +24,34 @@ const AddBook = () => {
   return (
     <Flex alignItems="center" justifyContent="center" paddingY={4}>
       <AddButton ariaLabel="Add new book" onClick={onOpen} />
-      <AddModal isOpen={isOpen} onClose={onClose} />
+      <AddBookModal isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
 };
 
-const EditBook = () => (
-  <Box
-    className="relative-position"
-    position="relative"
-    left="90%"
-    bottom="100%"
-    width="50px"
-  >
-    <IconWithStyle icon="edit" isRound position="absolute" />
+const EditBook = ({ id, title }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    <IconWithStyle icon="delete" isRound position="absolute" top="45px" />
-  </Box>
-);
+  return (
+    <Box
+      className="relative-position"
+      position="relative"
+      left="90%"
+      bottom="100%"
+      width="50px"
+    >
+      <IconWithStyle icon="edit" isRound position="absolute" onClick={onOpen} />
+      <EditBookModal
+        isOpen={isOpen}
+        onClose={onClose}
+        currentTitle={title}
+        id={id}
+      />
+
+      <IconWithStyle icon="delete" isRound position="absolute" top="45px" />
+    </Box>
+  );
+};
 
 const Books = ({ books }) => {
   const { url, path } = useRouteMatch();
@@ -110,7 +121,7 @@ const Books = ({ books }) => {
                       </PseudoBox>
                     </Flex>
 
-                    <EditBook />
+                    <EditBook title={book.title} id={book._id} />
                   </Box>
                 ))}
 

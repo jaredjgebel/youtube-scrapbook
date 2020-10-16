@@ -4,10 +4,10 @@ import useAccessToken from "./useAccessToken";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const createBook = async ({ title, token }) => {
+const editBookRequest = async ({ id, title, token }) => {
   try {
-    const response = await fetch(`${apiUrl}/api/v1/books`, {
-      method: "POST",
+    const response = await fetch(`${apiUrl}/api/v1/books/${id}`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -26,21 +26,20 @@ const createBook = async ({ title, token }) => {
   }
 };
 
-const useCreateBook = () => {
+const useEditBook = () => {
   const { token, authError } = useAccessToken() || {};
 
   const queryCache = useQueryCache();
 
-  const [mutate] = useMutation(createBook, {
-    // refetches user query to include new book
+  const [mutate] = useMutation(editBookRequest, {
     onSuccess: () => {
       queryCache.invalidateQueries("user");
     },
   });
 
-  return (title) => {
-    mutate({ title, token });
+  return (id, title) => {
+    mutate({ id, title, token });
   };
 };
 
-export default useCreateBook;
+export default useEditBook;

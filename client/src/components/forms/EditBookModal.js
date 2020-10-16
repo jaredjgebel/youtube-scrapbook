@@ -11,33 +11,30 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/core";
 
-import useCreateBook from "../hooks/useCreateBook";
+import useEditBook from "../hooks/useEditBook";
 
-const AddModal = ({ isOpen, onClose }) => {
-  const [input, setInput] = useState("");
+const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
+  const [input, setInput] = useState(currentTitle);
   const handleChange = (event) => setInput(event.target.value);
 
-  const createBook = useCreateBook();
+  const editBook = useEditBook();
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add a book</ModalHeader>
+        <ModalHeader>Edit your book</ModalHeader>
         <ModalCloseButton />
         <form className="add-book-form">
           <ModalBody>
-            <Input
-              placeholder="Book title"
-              value={input}
-              onChange={handleChange}
-            />
+            <Input value={input} onChange={handleChange} />
           </ModalBody>
 
           <ModalFooter>
             <Button variantColor="burgandy" onClick={onClose} marginRight={1}>
               Cancel
             </Button>
+
             <Button
               type="submit"
               variantColor="teal"
@@ -46,7 +43,7 @@ const AddModal = ({ isOpen, onClose }) => {
                 e.preventDefault();
 
                 try {
-                  await createBook(input);
+                  await editBook(id, input);
                 } catch (error) {
                   console.error(error);
                 }
@@ -54,7 +51,7 @@ const AddModal = ({ isOpen, onClose }) => {
                 onClose();
               }}
             >
-              Create
+              Edit
             </Button>
           </ModalFooter>
         </form>
@@ -63,4 +60,4 @@ const AddModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddModal;
+export default EditBookModal;
