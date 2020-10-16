@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Input,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -11,41 +10,43 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/core";
 
-import useEditBook from "../hooks/useEditBook";
+import useDeleteBook from "../hooks/useDeleteBook";
 
-const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
-  const [input, setInput] = useState(currentTitle);
-  const handleChange = (event) => setInput(event.target.value);
-
-  const editBook = useEditBook();
+const DeleteBookModal = ({ id, isOpen, onClose }) => {
+  const deleteBook = useDeleteBook();
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit your book</ModalHeader>
+        <ModalHeader>Delete book</ModalHeader>
         <ModalCloseButton />
         <form className="add-book-form">
           <ModalBody>
-            <Input value={input} onChange={handleChange} />
+            <p>Are you sure you want to delete your book?</p>
           </ModalBody>
 
           <ModalFooter>
-            <Button variantColor="burgandy" onClick={onClose} marginRight={1}>
+            <Button
+              variant="ghost"
+              variantColor="burgandy"
+              onClick={onClose}
+              marginRight={1}
+            >
               Cancel
             </Button>
 
             <Button
               type="submit"
-              variantColor="teal"
+              variantColor="burgandy"
               marginLeft={1}
               onClick={(e) => {
                 e.preventDefault();
-                editBook(id, input);
+                deleteBook(id);
                 onClose();
               }}
             >
-              Edit
+              Delete
             </Button>
           </ModalFooter>
         </form>
@@ -54,4 +55,4 @@ const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
   );
 };
 
-export default EditBookModal;
+export default DeleteBookModal;

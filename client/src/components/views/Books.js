@@ -17,6 +17,7 @@ import Pages from "./Pages";
 import IconWithStyle from "../buttons/IconWithStyle";
 import AddBookModal from "../forms/AddBookModal";
 import EditBookModal from "../forms/EditBookModal";
+import DeleteBookModal from "../forms/DeleteBookModal";
 
 const AddBook = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,9 +48,25 @@ const EditBook = ({ id, title }) => {
         currentTitle={title}
         id={id}
       />
-
-      <IconWithStyle icon="delete" isRound position="absolute" top="45px" />
+      <DeleteBook id={id} />
     </Box>
+  );
+};
+
+const DeleteBook = ({ id }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <>
+      <IconWithStyle
+        icon="delete"
+        isRound
+        position="absolute"
+        top="45px"
+        onClick={onOpen}
+      />
+      <DeleteBookModal isOpen={isOpen} onClose={onClose} id={id} />
+    </>
   );
 };
 

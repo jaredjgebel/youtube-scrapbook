@@ -46,7 +46,7 @@ const AddBookModal = ({ isOpen, onClose }) => {
                 e.preventDefault();
 
                 try {
-                  await createBook(input);
+                  createBook(input);
                 } catch (error) {
                   console.error(error);
                 }
