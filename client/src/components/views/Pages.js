@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { Flex, IconButton } from "@chakra-ui/core";
+import { Flex } from "@chakra-ui/core";
 
 import Page from "./Page";
 import AddButton from "../buttons/AddButton";
@@ -76,6 +76,7 @@ const Pages = (props) => {
           icon="arrow-back"
           isRound
           aria-label="Back to Books"
+          variant="solid"
           style={{ position: "absolute", top: "5px", left: "5px" }}
         />
       </Link>

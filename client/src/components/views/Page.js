@@ -1,7 +1,6 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { Flex, Grid, IconButton, Text } from "@chakra-ui/core";
-import ButtonWithStyle from "../buttons/ButtonWithStyle";
+import { Flex, Grid, Text } from "@chakra-ui/core";
 import IconWithStyle from "../buttons/IconWithStyle";
 
 const Page = ({ number, video, setVisible }) => (
@@ -10,7 +9,7 @@ const Page = ({ number, video, setVisible }) => (
     height="95%"
     maxHeight="95%"
     width="95%"
-    gridTemplateRows="50% 50%"
+    gridTemplateRows={["50% 50%", "65% 35%", null, "75% 25%"]}
     paddingX={[0, 4, 6, 8]}
     paddingY={1}
     boxShadow="0 0 10px gray"
@@ -57,14 +56,12 @@ const Page = ({ number, video, setVisible }) => (
             aria-label="Edit page"
             icon="edit"
             isRound
-            variant="outline"
             marginRight={1}
           />
           <IconWithStyle
             aria-label="Delete page"
             icon="delete"
             isRound
-            variant="outline"
             marginLeft={1}
           />
         </Flex>
@@ -73,7 +70,6 @@ const Page = ({ number, video, setVisible }) => (
           aria-label="Next page"
           icon="arrow-right"
           isRound
-          variant="outline"
           marginRight={1}
           onClick={() => setVisible(number + 1)}
         />

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, Heading, SimpleGrid, useDisclosure } from "@chakra-ui/core";
-import { useRouteMatch, Link, Switch, Route } from "react-router-dom";
+import { useRouteMatch, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import AddButton from "../buttons/AddButton";
