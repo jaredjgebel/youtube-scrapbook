@@ -2,6 +2,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 import { Flex, Grid, IconButton, Text } from "@chakra-ui/core";
 import ButtonWithStyle from "../buttons/ButtonWithStyle";
+import IconWithStyle from "../buttons/IconWithStyle";
 
 const Page = ({ number, video, setVisible }) => (
   <Grid
@@ -37,33 +38,43 @@ const Page = ({ number, video, setVisible }) => (
       </Flex>
 
       <Flex
-        alignItems="center"
+        alignItems="flex-end"
         justifyContent="space-between"
         width="100%"
-        paddingBottom={2}
+        paddingBottom={1}
       >
-        <IconButton
+        <IconWithStyle
           aria-label="Previous page"
           icon="arrow-left"
           isRound
-          variant="outline"
           isDisabled={number === 1}
+          marginLeft={1}
           onClick={() => setVisible(number - 1)}
         />
 
-        <ButtonWithStyle width={["100px", "100px", "100px", "125px"]}>
-          Edit
-        </ButtonWithStyle>
+        <Flex>
+          <IconWithStyle
+            aria-label="Edit page"
+            icon="edit"
+            isRound
+            variant="outline"
+            marginRight={1}
+          />
+          <IconWithStyle
+            aria-label="Delete page"
+            icon="delete"
+            isRound
+            variant="outline"
+            marginLeft={1}
+          />
+        </Flex>
 
-        <ButtonWithStyle width={["100px", "100px", "100px", "125px"]}>
-          Delete
-        </ButtonWithStyle>
-
-        <IconButton
+        <IconWithStyle
           aria-label="Next page"
           icon="arrow-right"
           isRound
           variant="outline"
+          marginRight={1}
           onClick={() => setVisible(number + 1)}
         />
       </Flex>

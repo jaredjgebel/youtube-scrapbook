@@ -42,15 +42,9 @@ const AddBookModal = ({ isOpen, onClose }) => {
               type="submit"
               variantColor="teal"
               marginLeft={1}
-              onClick={async (e) => {
+              onClick={(e) => {
                 e.preventDefault();
-
-                try {
-                  createBook(input);
-                } catch (error) {
-                  console.error(error);
-                }
-
+                createBook(input);
                 onClose();
               }}
             >

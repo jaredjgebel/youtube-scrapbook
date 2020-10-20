@@ -52,11 +52,10 @@ const Pages = (props) => {
           boxShadow="0 0 10px gray"
           overflowY="auto"
         >
-          <IconButton
+          <IconWithStyle
             aria-label="Previous page"
             icon="arrow-left"
             isRound
-            variant="outline"
             isDisabled={blankPageIndex === 1}
             onClick={() => setVisible(blankPageIndex - 1)}
           />
