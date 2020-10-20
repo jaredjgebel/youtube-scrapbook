@@ -7,10 +7,13 @@ import AddButton from "../buttons/AddButton";
 import UserContext from "../contexts/UserContext";
 import IconWithStyle from "../buttons/IconWithStyle";
 import Loading from "./Loading";
+import useCreatePage from "../hooks/useCreatePage";
 
 const Pages = (props) => {
   const user = useContext(UserContext);
   const [visible, setVisible] = useState(1);
+
+  const createPage = useCreatePage();
 
   const book =
     user &&
@@ -38,36 +41,42 @@ const Pages = (props) => {
 
   const blankPageIndex = book.pages.length + 1;
 
-  pages.push(
-    <Fragment key={blankPageIndex}>
-      {visible === blankPageIndex && (
-        <Flex
-          height="95%"
-          maxHeight="95%"
-          width="95%"
-          alignItems="flex-end"
-          justifyContent="flex-start"
-          paddingX={[2, 4, 6, 8]}
-          paddingY={2}
-          boxShadow="0 0 10px gray"
-          overflowY="auto"
-        >
-          <IconWithStyle
-            aria-label="Previous page"
-            icon="arrow-left"
-            isRound
-            isDisabled={blankPageIndex === 1}
-            onClick={() => setVisible(blankPageIndex - 1)}
-          />
-          <AddButton
-            alignSelf="center"
-            marginLeft={`calc(50% - 60px)`}
-            ariaLabel="Add new page"
-          />
-        </Flex>
-      )}
-    </Fragment>
-  );
+  if (blankPageIndex <= 100) {
+    pages.push(
+      <Fragment key={blankPageIndex}>
+        {visible === blankPageIndex && (
+          <Flex
+            height="95%"
+            maxHeight="95%"
+            width="95%"
+            alignItems="flex-end"
+            justifyContent="flex-start"
+            paddingX={[2, 4, 6, 8]}
+            paddingY={2}
+            boxShadow="0 0 10px gray"
+            overflowY="auto"
+          >
+            <IconWithStyle
+              aria-label="Previous page"
+              icon="arrow-left"
+              isRound
+              isDisabled={blankPageIndex === 1}
+              onClick={() => setVisible(blankPageIndex - 1)}
+            />
+            <AddButton
+              alignSelf="center"
+              marginLeft={`calc(50% - 60px)`}
+              ariaLabel="Add new page"
+              onClick={(e) => {
+                e.preventDefault();
+                createPage(book._id, blankPageIndex);
+              }}
+            />
+          </Flex>
+        )}
+      </Fragment>
+    );
+  }
 
   return (
     <>

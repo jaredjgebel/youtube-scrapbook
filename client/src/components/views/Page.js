@@ -15,66 +15,70 @@ const Page = ({ number, video, setVisible }) => (
     boxShadow="0 0 10px gray"
     overflowY="unset"
   >
-    <Flex
-      width="100%"
-      height="100%"
-      justifyContent="center"
-      alignItems="center"
-      paddingY={2}
-    >
-      <ReactPlayer url={video.link} width="100%" height="100%" />
-    </Flex>
-
-    <Grid gridTemplateRows="3fr 1fr" height="100%">
-      <Flex
-        flexDirection="column"
-        justifyContent="space-between"
-        width="100%"
-        height="100%"
-        overflowY="auto"
-      >
-        <Text padding={4}>{video.notes}</Text>
-      </Flex>
-
-      <Flex
-        alignItems="flex-end"
-        justifyContent="space-between"
-        width="100%"
-        paddingBottom={1}
-      >
-        <IconWithStyle
-          aria-label="Previous page"
-          icon="arrow-left"
-          isRound
-          isDisabled={number === 1}
-          marginLeft={1}
-          onClick={() => setVisible(number - 1)}
-        />
-
-        <Flex>
-          <IconWithStyle
-            aria-label="Edit page"
-            icon="edit"
-            isRound
-            marginRight={1}
-          />
-          <IconWithStyle
-            aria-label="Delete page"
-            icon="delete"
-            isRound
-            marginLeft={1}
-          />
+    {video && (
+      <>
+        <Flex
+          width="100%"
+          height="100%"
+          justifyContent="center"
+          alignItems="center"
+          paddingY={2}
+        >
+          <ReactPlayer url={video.link} width="100%" height="100%" />
         </Flex>
 
-        <IconWithStyle
-          aria-label="Next page"
-          icon="arrow-right"
-          isRound
-          marginRight={1}
-          onClick={() => setVisible(number + 1)}
-        />
-      </Flex>
-    </Grid>
+        <Grid gridTemplateRows="3fr 1fr" height="100%">
+          <Flex
+            flexDirection="column"
+            justifyContent="space-between"
+            width="100%"
+            height="100%"
+            overflowY="auto"
+          >
+            <Text padding={4}>{video.notes}</Text>
+          </Flex>
+
+          <Flex
+            alignItems="flex-end"
+            justifyContent="space-between"
+            width="100%"
+            paddingBottom={1}
+          >
+            <IconWithStyle
+              aria-label="Previous page"
+              icon="arrow-left"
+              isRound
+              isDisabled={number === 1}
+              marginLeft={1}
+              onClick={() => setVisible(number - 1)}
+            />
+
+            <Flex>
+              <IconWithStyle
+                aria-label="Edit page"
+                icon="edit"
+                isRound
+                marginRight={1}
+              />
+              <IconWithStyle
+                aria-label="Delete page"
+                icon="delete"
+                isRound
+                marginLeft={1}
+              />
+            </Flex>
+
+            <IconWithStyle
+              aria-label="Next page"
+              icon="arrow-right"
+              isRound
+              marginRight={1}
+              onClick={() => setVisible(number + 1)}
+            />
+          </Flex>
+        </Grid>
+      </>
+    )}
   </Grid>
 );
 

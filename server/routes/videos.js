@@ -10,10 +10,13 @@ router.get(
   isValidObjectId,
   getUserMiddleware,
   function getVideosFromUser(req, res) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId, pageId, videoId } = req.params;
 
-    const video = user.books.id(bookId).pages.id(pageId).videos.id(videoId);
+    const video = databaseUser.books
+      .id(bookId)
+      .pages.id(pageId)
+      .videos.id(videoId);
 
     return res.status(200).json({ video });
   }
@@ -24,13 +27,13 @@ router.post(
   isValidObjectId,
   getUserMiddleware,
   async function postVideoRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId, pageId } = req.params;
     const { link, notes } = req.body;
 
     try {
       const userWithNewVideo = await createVideo({
-        userId: user.id,
+        userId: databaseUser._id,
         bookId,
         pageId,
         link,
@@ -55,13 +58,13 @@ router.patch(
   isValidObjectId,
   getUserMiddleware,
   async function patchVideoRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId, pageId, videoId } = req.params;
     const { notes, link } = req.body;
 
     try {
       const userWithEditedVideo = await editVideo({
-        userId: user.id,
+        userId: databaseUser._id,
         bookId,
         pageId,
         videoId,
@@ -87,12 +90,12 @@ router.delete(
   isValidObjectId,
   getUserMiddleware,
   async function deleteVideoRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId, pageId, videoId } = req.params;
 
     try {
       const userWithDeletedVideo = await deleteVideo({
-        userId: user.id,
+        userId: databaseUser._id,
         bookId,
         pageId,
         videoId,

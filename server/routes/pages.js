@@ -6,7 +6,7 @@ const { createPage, editPage, deletePage } = require("../database/pagedb");
 const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
-  "/:id/books/:bookId/pages/:pageId",
+  "/books/:bookId/pages/:pageId",
   isValidObjectId,
   getUserMiddleware,
   function getPagesFromUser(req, res) {
@@ -20,17 +20,17 @@ router.get(
 );
 
 router.post(
-  "/:id/books/:bookId/pages",
+  "/books/:bookId/pages",
   isValidObjectId,
   getUserMiddleware,
   async function postPageRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId } = req.params;
     const number = req.body && req.body.number;
 
     try {
       const userWithNewPage = await createPage({
-        userId: user._id,
+        userId: databaseUser._id,
         bookId,
         number,
       });
@@ -49,19 +49,19 @@ router.post(
 );
 
 router.patch(
-  "/:id/books/:bookId/pages/:pageId",
+  "/books/:bookId/pages/:pageId",
   isValidObjectId,
   getUserMiddleware,
   async function patchPageRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId, pageId } = req.params;
-    const page = user.books.id(bookId).pages.id(pageId);
+    const page = databaseUser.books.id(bookId).pages.id(pageId);
 
     const number = (req.body && req.body.number) || page.number;
 
     try {
       const userWithEditedPage = await editPage({
-        userId: user._id,
+        userId: databaseUser._id,
         bookId,
         pageId,
         number,
@@ -81,16 +81,16 @@ router.patch(
 );
 
 router.delete(
-  "/:id/books/:bookId/pages/:pageId",
+  "/books/:bookId/pages/:pageId",
   isValidObjectId,
   getUserMiddleware,
   async function deletePageRequest(req, res, next) {
-    const { user } = req;
+    const { databaseUser } = req;
     const { bookId, pageId } = req.params;
 
     try {
       const userWithDeletedPage = await deletePage({
-        userId: user.id,
+        userId: databaseUser._id,
         bookId,
         pageId,
       });
