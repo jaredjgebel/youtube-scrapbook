@@ -6,7 +6,7 @@ const { createVideo, editVideo, deleteVideo } = require("../database/videodb");
 const isValidObjectId = require("../middleware/idValidationMiddleware");
 
 router.get(
-  "/:id/books/:bookId/pages/:pageId/videos/:videoId",
+  "/books/:bookId/pages/:pageId/videos/:videoId",
   isValidObjectId,
   getUserMiddleware,
   function getVideosFromUser(req, res) {
@@ -23,7 +23,7 @@ router.get(
 );
 
 router.post(
-  "/:id/books/:bookId/pages/:pageId/videos",
+  "/books/:bookId/pages/:pageId/videos",
   isValidObjectId,
   getUserMiddleware,
   async function postVideoRequest(req, res, next) {
@@ -54,7 +54,7 @@ router.post(
 );
 
 router.patch(
-  "/:id/books/:bookId/pages/:pageId/videos/:videoId",
+  "/books/:bookId/pages/:pageId/videos/:videoId",
   isValidObjectId,
   getUserMiddleware,
   async function patchVideoRequest(req, res, next) {
@@ -86,7 +86,7 @@ router.patch(
 );
 
 router.delete(
-  "/:id/books/:bookId/pages/:pageId/videos/:videoId",
+  "/books/:bookId/pages/:pageId/videos/:videoId",
   isValidObjectId,
   getUserMiddleware,
   async function deleteVideoRequest(req, res, next) {

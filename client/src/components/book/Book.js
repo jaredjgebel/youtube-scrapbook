@@ -38,7 +38,6 @@ const Book = ({ title, id }) => {
               <Flex
                 direction="column"
                 alignItems="center"
-                // justifyContent="center"
                 height="100%"
                 width="100%"
               >

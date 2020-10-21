@@ -28,7 +28,6 @@ const createPage = async ({ bookId, number, token }) => {
 
 const useCreatePage = () => {
   const { token, authError } = useAccessToken() || {};
-
   const queryCache = useQueryCache();
 
   const [mutate] = useMutation(createPage, {

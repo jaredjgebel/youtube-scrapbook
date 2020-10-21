@@ -1,9 +1,39 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { Flex, Grid, Text } from "@chakra-ui/core";
-import IconWithStyle from "../buttons/IconWithStyle";
+import { useRouteMatch } from "react-router-dom";
+import { Flex, Grid, Text, useDisclosure } from "@chakra-ui/core";
 
-const Page = ({ number, video, setVisible }) => (
+import IconWithStyle from "../buttons/IconWithStyle";
+import AddVideoModal from "../forms/AddVideoModal";
+
+const AddVideo = ({ pageId }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { params } = useRouteMatch();
+  const { id } = params;
+  return (
+    <>
+      <IconWithStyle
+        aria-label="Add video"
+        icon="add"
+        isRound
+        marginRight={1}
+        onClick={onOpen}
+      />
+      <AddVideoModal
+        isOpen={isOpen}
+        onClose={onClose}
+        bookId={id}
+        pageId={pageId}
+      />
+    </>
+  );
+};
+
+const EditVideo = ({ pageId }) => {
+  return <IconWithStyle icon="edit" aria-label="Edit video" isRound />;
+};
+
+const Page = ({ id, number, video, setVisible }) => (
   <Grid
     className="page-grid-container"
     height="95%"
@@ -15,8 +45,8 @@ const Page = ({ number, video, setVisible }) => (
     boxShadow="0 0 10px gray"
     overflowY="unset"
   >
-    {video && (
-      <>
+    <>
+      {video && (
         <Flex
           width="100%"
           height="100%"
@@ -26,8 +56,10 @@ const Page = ({ number, video, setVisible }) => (
         >
           <ReactPlayer url={video.link} width="100%" height="100%" />
         </Flex>
+      )}
 
-        <Grid gridTemplateRows="3fr 1fr" height="100%">
+      <Grid gridTemplateRows="3fr 1fr" height="100%">
+        {video && (
           <Flex
             flexDirection="column"
             justifyContent="space-between"
@@ -37,48 +69,44 @@ const Page = ({ number, video, setVisible }) => (
           >
             <Text padding={4}>{video.notes}</Text>
           </Flex>
+        )}
 
-          <Flex
-            alignItems="flex-end"
-            justifyContent="space-between"
-            width="100%"
-            paddingBottom={1}
-          >
+        <Flex
+          alignItems="flex-end"
+          justifyContent="space-between"
+          width="100%"
+          paddingBottom={1}
+        >
+          <IconWithStyle
+            aria-label="Previous page"
+            icon="arrow-left"
+            isRound
+            isDisabled={number === 1}
+            marginLeft={1}
+            onClick={() => setVisible(number - 1)}
+          />
+
+          <Flex>
+            {video ? <EditVideo /> : <AddVideo pageId={id} />}
+
             <IconWithStyle
-              aria-label="Previous page"
-              icon="arrow-left"
+              aria-label="Delete page"
+              icon="delete"
               isRound
-              isDisabled={number === 1}
               marginLeft={1}
-              onClick={() => setVisible(number - 1)}
-            />
-
-            <Flex>
-              <IconWithStyle
-                aria-label="Edit page"
-                icon="edit"
-                isRound
-                marginRight={1}
-              />
-              <IconWithStyle
-                aria-label="Delete page"
-                icon="delete"
-                isRound
-                marginLeft={1}
-              />
-            </Flex>
-
-            <IconWithStyle
-              aria-label="Next page"
-              icon="arrow-right"
-              isRound
-              marginRight={1}
-              onClick={() => setVisible(number + 1)}
             />
           </Flex>
-        </Grid>
-      </>
-    )}
+
+          <IconWithStyle
+            aria-label="Next page"
+            icon="arrow-right"
+            isRound
+            marginRight={1}
+            onClick={() => setVisible(number + 1)}
+          />
+        </Flex>
+      </Grid>
+    </>
   </Grid>
 );
 

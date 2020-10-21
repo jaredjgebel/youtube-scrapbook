@@ -29,6 +29,7 @@ const Pages = (props) => {
       <Fragment key={i}>
         {visible === page.number && (
           <Page
+            id={page._id}
             number={page.number}
             video={page.videos[0]}
             pageCount={book.pages.length}
