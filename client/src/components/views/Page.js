@@ -7,6 +7,7 @@ import IconWithStyle from "../buttons/IconWithStyle";
 import AddVideoModal from "../forms/AddVideoModal";
 import EditVideoModal from "../forms/EditVideoModal";
 import DeletePageModal from "../forms/DeletePageModal";
+import DeleteVideoModal from "../forms/DeleteVideoModal";
 
 const AddVideo = ({ pageId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -81,6 +82,31 @@ const DeletePage = ({ pageId }) => {
   );
 };
 
+const DeleteVideo = ({ pageId, videoId }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { params } = useRouteMatch();
+  const { id } = params;
+
+  return (
+    <>
+      <IconWithStyle
+        aria-label="Delete video"
+        icon="delete"
+        isRound
+        marginLeft={1}
+        onClick={onOpen}
+      />
+      <DeleteVideoModal
+        bookId={id}
+        pageId={pageId}
+        videoId={videoId}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
+    </>
+  );
+};
+
 const Page = ({ id, number, video, setVisible }) => (
   <Grid
     className="page-grid-container"
@@ -147,12 +173,7 @@ const Page = ({ id, number, video, setVisible }) => (
             )}
 
             {video ? (
-              <IconWithStyle
-                aria-label="Delete video"
-                icon="delete"
-                isRound
-                marginLeft={1}
-              />
+              <DeleteVideo pageId={id} videoId={video._id} />
             ) : (
               <DeletePage pageId={id} />
             )}
