@@ -5,6 +5,7 @@ import { Flex, Grid, Text, useDisclosure } from "@chakra-ui/core";
 
 import IconWithStyle from "../buttons/IconWithStyle";
 import AddVideoModal from "../forms/AddVideoModal";
+import EditVideoModal from "../forms/EditVideoModal";
 
 const AddVideo = ({ pageId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,8 +30,30 @@ const AddVideo = ({ pageId }) => {
   );
 };
 
-const EditVideo = ({ pageId }) => {
-  return <IconWithStyle icon="edit" aria-label="Edit video" isRound />;
+const EditVideo = ({ pageId, videoId, link, notes }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { params } = useRouteMatch();
+  const { id } = params;
+
+  return (
+    <>
+      <IconWithStyle
+        icon="edit"
+        aria-label="Edit video"
+        isRound
+        onClick={onOpen}
+      />
+      <EditVideoModal
+        isOpen={isOpen}
+        onClose={onClose}
+        bookId={id}
+        pageId={pageId}
+        videoId={videoId}
+        link={link}
+        notes={notes}
+      />
+    </>
+  );
 };
 
 const Page = ({ id, number, video, setVisible }) => (
@@ -87,7 +110,16 @@ const Page = ({ id, number, video, setVisible }) => (
           />
 
           <Flex>
-            {video ? <EditVideo /> : <AddVideo pageId={id} />}
+            {video ? (
+              <EditVideo
+                pageId={id}
+                videoId={video._id}
+                link={video.link}
+                notes={video.notes}
+              />
+            ) : (
+              <AddVideo pageId={id} />
+            )}
 
             <IconWithStyle
               aria-label="Delete page"
