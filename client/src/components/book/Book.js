@@ -7,8 +7,9 @@ import { EditBook } from "../views/Books";
 
 const Book = ({ title, id }) => {
   const { url } = useRouteMatch();
+
   return (
-    <Box marginX={[6, 24, 6, 20]} marginY={2}>
+    <Box marginX={[6, 24, 6, 20]} marginY={2} position="relative">
       <Flex
         alignItems="center"
         justifyContent="center"
@@ -16,7 +17,8 @@ const Book = ({ title, id }) => {
         width="100%"
       >
         <PseudoBox
-          as={Flex}
+          as={Link}
+          to={`${url}/${id}`}
           role="group"
           cursor="pointer"
           alignItems="center"
@@ -34,27 +36,24 @@ const Book = ({ title, id }) => {
           _active={{ backgroundColor: "#ceb7b1" }}
         >
           <Box width="100%" height="100%">
-            <Link to={`${url}/${id}`} width="100%" height="100%">
-              <Flex
-                direction="column"
-                alignItems="center"
-                height="100%"
-                width="100%"
+            <Flex
+              direction="column"
+              alignItems="center"
+              height="100%"
+              width="100%"
+            >
+              <BookIcon size={["110px", "130px"]} paddingBottom="12px" />
+              <Heading
+                as="h2"
+                textAlign="center"
+                fontSize={["lg", "lg", "lg", "xl"]}
               >
-                <BookIcon size={["110px", "130px"]} paddingBottom="12px" />
-                <Heading
-                  as="h2"
-                  textAlign="center"
-                  fontSize={["lg", "lg", "lg", "xl"]}
-                >
-                  {title}
-                </Heading>
-              </Flex>
-            </Link>
+                {title}
+              </Heading>
+            </Flex>
           </Box>
-
-          <EditBook title={title} id={id} />
         </PseudoBox>
+        <EditBook title={title} id={id} />
       </Flex>
     </Box>
   );

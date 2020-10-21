@@ -28,10 +28,11 @@ export const EditBook = ({ id, title }) => {
 
   return (
     <Box
-      className="relative-position"
-      alignSelf="end"
-      position="relative"
+      className="edit-parent"
+      position="absolute"
       width="50px"
+      top="15px"
+      right="0px"
     >
       <IconWithStyle
         icon="edit"
