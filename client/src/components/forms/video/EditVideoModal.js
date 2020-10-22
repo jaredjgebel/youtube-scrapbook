@@ -13,34 +13,42 @@ import {
   Input,
 } from "@chakra-ui/core";
 
-import useCreateVideo from "../hooks/useCreateVideo";
+import useEditVideo from "../../hooks/video/useEditVideo";
 
-const AddVideoModal = ({ isOpen, onClose, bookId, pageId }) => {
-  const createVideo = useCreateVideo();
+const EditVideoModal = ({
+  isOpen,
+  onClose,
+  bookId,
+  pageId,
+  videoId,
+  link,
+  notes,
+}) => {
+  const editVideo = useEditVideo();
 
-  const [link, setLink] = useState("");
+  const [linkState, setLink] = useState(link);
   const handleLinkChange = (event) => setLink(event.target.value);
 
-  const [notes, setNotes] = useState("");
+  const [notesState, setNotes] = useState(notes);
   const handleNotesChange = (event) => setNotes(event.target.value);
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add a video</ModalHeader>
+        <ModalHeader>Edit video</ModalHeader>
         <ModalCloseButton onClick={onClose} />
-        <form className="add-video-form">
+        <form className="Edit-video-form">
           <ModalBody>
             <Flex
               as={Input}
-              value={link}
+              value={linkState}
               placeholder="Link to video"
               onChange={handleLinkChange}
               marginBottom={1}
             />
             <Textarea
-              value={notes}
+              value={notesState}
               placeholder="Notes"
               onChange={handleNotesChange}
             />
@@ -50,7 +58,8 @@ const AddVideoModal = ({ isOpen, onClose, bookId, pageId }) => {
             <Button
               variantColor="burgandy"
               onClick={() => {
-                setLink("");
+                setLink(link);
+                setNotes(notes);
                 onClose();
               }}
               marginRight={1}
@@ -64,11 +73,11 @@ const AddVideoModal = ({ isOpen, onClose, bookId, pageId }) => {
               marginLeft={1}
               onClick={(e) => {
                 e.preventDefault();
-                createVideo(bookId, pageId, link, notes);
+                editVideo(bookId, pageId, videoId, notesState, linkState);
                 onClose();
               }}
             >
-              Create
+              Edit
             </Button>
           </ModalFooter>
         </form>
@@ -77,4 +86,4 @@ const AddVideoModal = ({ isOpen, onClose, bookId, pageId }) => {
   );
 };
 
-export default AddVideoModal;
+export default EditVideoModal;

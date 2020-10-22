@@ -2,12 +2,12 @@ import React, { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Flex } from "@chakra-ui/core";
 
-import Page from "./Page";
+import Page from "../page/Page";
 import AddButton from "../buttons/AddButton";
 import UserContext from "../contexts/UserContext";
 import IconWithStyle from "../buttons/IconWithStyle";
-import Loading from "./Loading";
-import useCreatePage from "../hooks/useCreatePage";
+import Loading from "../loading/Loading";
+import useCreatePage from "../hooks/page/useCreatePage";
 
 const Pages = (props) => {
   const user = useContext(UserContext);

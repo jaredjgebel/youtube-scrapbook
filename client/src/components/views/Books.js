@@ -1,74 +1,12 @@
 import React from "react";
-import { Box, Flex, Heading, SimpleGrid, useDisclosure } from "@chakra-ui/core";
+import { Flex, Heading, SimpleGrid } from "@chakra-ui/core";
 import { useRouteMatch, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import AddButton from "../buttons/AddButton";
-import Loading from "./Loading";
+import Loading from "../loading/Loading";
 import Pages from "./Pages";
-import IconWithStyle from "../buttons/IconWithStyle";
 import Book from "../book/Book";
-import AddBookModal from "../forms/AddBookModal";
-import EditBookModal from "../forms/EditBookModal";
-import DeleteBookModal from "../forms/DeleteBookModal";
-
-const AddBook = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  return (
-    <Flex alignItems="center" justifyContent="center" paddingY={8}>
-      <AddButton ariaLabel="Add new book" onClick={onOpen} />
-      <AddBookModal isOpen={isOpen} onClose={onClose} />
-    </Flex>
-  );
-};
-
-export const EditBook = ({ id, title }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  return (
-    <Box
-      className="edit-parent"
-      position="absolute"
-      width="50px"
-      top="15px"
-      right="0px"
-    >
-      <IconWithStyle
-        icon="edit"
-        isRound
-        position="absolute"
-        size={["lg"]}
-        onClick={onOpen}
-      />
-      <EditBookModal
-        isOpen={isOpen}
-        onClose={onClose}
-        currentTitle={title}
-        id={id}
-      />
-      <DeleteBook id={id} />
-    </Box>
-  );
-};
-
-const DeleteBook = ({ id }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  return (
-    <>
-      <IconWithStyle
-        icon="delete"
-        isRound
-        position="absolute"
-        top="50px"
-        size="lg"
-        onClick={onOpen}
-      />
-      <DeleteBookModal isOpen={isOpen} onClose={onClose} id={id} />
-    </>
-  );
-};
+import AddBook from "../book/AddBook";
 
 const Books = ({ books }) => {
   const { path } = useRouteMatch();

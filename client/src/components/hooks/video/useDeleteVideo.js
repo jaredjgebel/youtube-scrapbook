@@ -1,13 +1,13 @@
 import { useMutation, useQueryCache } from "react-query";
 
-import useAccessToken from "./useAccessToken";
+import useAccessToken from "../useAccessToken";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const deletePageRequest = async ({ bookId, pageId, token }) => {
+const deleteVideoRequest = async ({ bookId, pageId, videoId, token }) => {
   try {
     const response = await fetch(
-      `${apiUrl}/api/v1/books/${bookId}/pages/${pageId}`,
+      `${apiUrl}/api/v1/books/${bookId}/pages/${pageId}/videos/${videoId}`,
       {
         method: "DELETE",
         headers: {
@@ -28,20 +28,20 @@ const deletePageRequest = async ({ bookId, pageId, token }) => {
   }
 };
 
-const useDeletePage = () => {
-  const { token, authError } = useAccessToken() || {};
+const useDeleteVideo = () => {
+  const { token } = useAccessToken() || {};
 
   const queryCache = useQueryCache();
 
-  const [mutate] = useMutation(deletePageRequest, {
+  const [mutate] = useMutation(deleteVideoRequest, {
     onSuccess: () => {
       queryCache.invalidateQueries("user");
     },
   });
 
-  return (bookId, pageId) => {
-    mutate({ bookId, pageId, token });
+  return (bookId, pageId, videoId) => {
+    mutate({ bookId, pageId, videoId, token });
   };
 };
 
-export default useDeletePage;
+export default useDeleteVideo;

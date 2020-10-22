@@ -1,19 +1,19 @@
 import { useMutation, useQueryCache } from "react-query";
 
-import useAccessToken from "./useAccessToken";
+import useAccessToken from "../useAccessToken";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const createPage = async ({ bookId, number, token }) => {
+const editBookRequest = async ({ id, title, token }) => {
   try {
-    const response = await fetch(`${apiUrl}/api/v1/books/${bookId}/pages`, {
-      method: "POST",
+    const response = await fetch(`${apiUrl}/api/v1/books/${id}`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ number }),
+      body: JSON.stringify({ title }),
     });
 
     const json = await response.json();
@@ -26,19 +26,20 @@ const createPage = async ({ bookId, number, token }) => {
   }
 };
 
-const useCreatePage = () => {
-  const { token, authError } = useAccessToken() || {};
+const useEditBook = () => {
+  const { token } = useAccessToken() || {};
+
   const queryCache = useQueryCache();
 
-  const [mutate] = useMutation(createPage, {
+  const [mutate] = useMutation(editBookRequest, {
     onSuccess: () => {
       queryCache.invalidateQueries("user");
     },
   });
 
-  return (bookId, number) => {
-    mutate({ bookId, number, token });
+  return (id, title) => {
+    mutate({ id, title, token });
   };
 };
 
-export default useCreatePage;
+export default useEditBook;

@@ -3,10 +3,10 @@ import { Route, Switch } from "react-router-dom";
 import { Flex } from "@chakra-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import PrivateRoute from "./auth/PrivateRoute";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import FrontPage from "./components/views/FrontPage";
 import Home from "./components/views/Home";
-import Loading from "./components/views/Loading";
+import Loading from "./components/loading/Loading";
 
 const App = () => {
   const { isLoading } = useAuth0();

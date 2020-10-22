@@ -11,10 +11,10 @@ import {
   Text,
 } from "@chakra-ui/core";
 
-import useDeleteBook from "../hooks/useDeleteBook";
+import useDeleteVideo from "../../hooks/video/useDeleteVideo";
 
-const DeleteBookModal = ({ id, isOpen, onClose }) => {
-  const deleteBook = useDeleteBook();
+const DeleteVideoModal = ({ bookId, pageId, videoId, isOpen, onClose }) => {
+  const deleteVideo = useDeleteVideo();
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -22,10 +22,10 @@ const DeleteBookModal = ({ id, isOpen, onClose }) => {
       <ModalContent>
         <ModalHeader>Delete book</ModalHeader>
         <ModalCloseButton />
-        <form className="add-book-form">
+        <form className="delete-video-form">
           <ModalBody>
             <Text fontSize="sm">
-              Are you sure you want to delete your book?
+              Are you sure you want to delete this video?
             </Text>
           </ModalBody>
 
@@ -45,7 +45,7 @@ const DeleteBookModal = ({ id, isOpen, onClose }) => {
               marginLeft={1}
               onClick={(e) => {
                 e.preventDefault();
-                deleteBook(id);
+                deleteVideo(bookId, pageId, videoId);
                 onClose();
               }}
             >
@@ -58,4 +58,4 @@ const DeleteBookModal = ({ id, isOpen, onClose }) => {
   );
 };
 
-export default DeleteBookModal;
+export default DeleteVideoModal;

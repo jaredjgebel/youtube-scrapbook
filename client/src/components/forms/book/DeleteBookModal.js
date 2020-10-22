@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Modal,
@@ -8,40 +8,32 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Textarea,
+  Text,
 } from "@chakra-ui/core";
 
-import useEditBook from "../hooks/useEditBook";
+import useDeleteBook from "../../hooks/book/useDeleteBook";
 
-const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
-  const [input, setInput] = useState(currentTitle);
-  const handleChange = (event) => setInput(event.target.value);
-
-  const editBook = useEditBook();
+const DeleteBookModal = ({ id, isOpen, onClose }) => {
+  const deleteBook = useDeleteBook();
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit your book</ModalHeader>
-        <ModalCloseButton
-          onClick={() => {
-            setInput(currentTitle);
-            onClose();
-          }}
-        />
+        <ModalHeader>Delete book</ModalHeader>
+        <ModalCloseButton />
         <form className="add-book-form">
           <ModalBody>
-            <Textarea value={input} onChange={handleChange} />
+            <Text fontSize="sm">
+              Are you sure you want to delete your book?
+            </Text>
           </ModalBody>
 
           <ModalFooter>
             <Button
+              variant="ghost"
               variantColor="burgandy"
-              onClick={() => {
-                setInput(currentTitle);
-                onClose();
-              }}
+              onClick={onClose}
               marginRight={1}
             >
               Cancel
@@ -49,15 +41,15 @@ const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
 
             <Button
               type="submit"
-              variantColor="teal"
+              variantColor="burgandy"
               marginLeft={1}
               onClick={(e) => {
                 e.preventDefault();
-                editBook(id, input);
+                deleteBook(id);
                 onClose();
               }}
             >
-              Edit
+              Delete
             </Button>
           </ModalFooter>
         </form>
@@ -66,4 +58,4 @@ const EditBookModal = ({ isOpen, onClose, currentTitle, id }) => {
   );
 };
 
-export default EditBookModal;
+export default DeleteBookModal;

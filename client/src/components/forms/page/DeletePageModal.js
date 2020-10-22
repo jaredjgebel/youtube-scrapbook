@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
-  Input,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -9,46 +8,48 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Text,
 } from "@chakra-ui/core";
 
-import useCreateBook from "../hooks/useCreateBook";
+import useDeletePage from "../../hooks/page/useDeletePage";
 
-const AddBookModal = ({ isOpen, onClose }) => {
-  const [input, setInput] = useState("");
-  const handleChange = (event) => setInput(event.target.value);
-
-  const createBook = useCreateBook();
+const DeletePageModal = ({ bookId, pageId, isOpen, onClose }) => {
+  const deletePage = useDeletePage();
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add a book</ModalHeader>
+        <ModalHeader>Delete book</ModalHeader>
         <ModalCloseButton />
-        <form className="add-book-form">
+        <form className="delete-page-form">
           <ModalBody>
-            <Input
-              placeholder="Book title"
-              value={input}
-              onChange={handleChange}
-            />
+            <Text fontSize="sm">
+              Are you sure you want to delete this page?
+            </Text>
           </ModalBody>
 
           <ModalFooter>
-            <Button variantColor="burgandy" onClick={onClose} marginRight={1}>
+            <Button
+              variant="ghost"
+              variantColor="burgandy"
+              onClick={onClose}
+              marginRight={1}
+            >
               Cancel
             </Button>
+
             <Button
               type="submit"
-              variantColor="teal"
+              variantColor="burgandy"
               marginLeft={1}
               onClick={(e) => {
                 e.preventDefault();
-                createBook(input);
+                deletePage(bookId, pageId);
                 onClose();
               }}
             >
-              Create
+              Delete
             </Button>
           </ModalFooter>
         </form>
@@ -57,4 +58,4 @@ const AddBookModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddBookModal;
+export default DeletePageModal;

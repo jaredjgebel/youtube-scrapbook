@@ -3,7 +3,7 @@ import { Box, Flex, Heading, PseudoBox } from "@chakra-ui/core";
 import { Link, useRouteMatch } from "react-router-dom";
 
 import BookIcon from "./BookIcon";
-import { EditBook } from "../views/Books";
+import EditBook from "../book/EditBook";
 
 const Book = ({ title, id }) => {
   const { url } = useRouteMatch();
@@ -53,6 +53,7 @@ const Book = ({ title, id }) => {
             </Flex>
           </Box>
         </PseudoBox>
+
         <EditBook title={title} id={id} />
       </Flex>
     </Box>

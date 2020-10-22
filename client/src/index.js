@@ -7,7 +7,7 @@ import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import * as serviceWorker from "./serviceWorker";
 
 import App from "./App";
-import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
+import Auth0ProviderWithHistory from "./components/auth/Auth0ProviderWithHistory";
 import theme from "./themes/themes";
 
 const queryCache = new QueryCache();

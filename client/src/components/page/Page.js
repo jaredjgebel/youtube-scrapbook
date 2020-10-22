@@ -4,10 +4,10 @@ import { useRouteMatch } from "react-router-dom";
 import { Flex, Grid, Text, useDisclosure } from "@chakra-ui/core";
 
 import IconWithStyle from "../buttons/IconWithStyle";
-import AddVideoModal from "../forms/AddVideoModal";
-import EditVideoModal from "../forms/EditVideoModal";
-import DeletePageModal from "../forms/DeletePageModal";
-import DeleteVideoModal from "../forms/DeleteVideoModal";
+import AddVideoModal from "../forms/video/AddVideoModal";
+import EditVideoModal from "../forms/video/EditVideoModal";
+import DeletePageModal from "../forms/page/DeletePageModal";
+import DeleteVideoModal from "../forms/video/DeleteVideoModal";
 
 const AddVideo = ({ pageId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

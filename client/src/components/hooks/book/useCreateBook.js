@@ -1,18 +1,19 @@
 import { useMutation, useQueryCache } from "react-query";
 
-import useAccessToken from "./useAccessToken";
+import useAccessToken from "../useAccessToken";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const deleteBookRequest = async ({ id, token }) => {
+const createBook = async ({ title, token }) => {
   try {
-    const response = await fetch(`${apiUrl}/api/v1/books/${id}`, {
-      method: "DELETE",
+    const response = await fetch(`${apiUrl}/api/v1/books`, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       credentials: "include",
+      body: JSON.stringify({ title }),
     });
 
     const json = await response.json();
@@ -25,20 +26,21 @@ const deleteBookRequest = async ({ id, token }) => {
   }
 };
 
-const useDeleteBook = () => {
-  const { token, authError } = useAccessToken() || {};
+const useCreateBook = () => {
+  const { token } = useAccessToken() || {};
 
   const queryCache = useQueryCache();
 
-  const [mutate] = useMutation(deleteBookRequest, {
+  const [mutate] = useMutation(createBook, {
+    // refetches user query to include new book
     onSuccess: () => {
       queryCache.invalidateQueries("user");
     },
   });
 
-  return (id, title) => {
-    mutate({ id, title, token });
+  return (title) => {
+    mutate({ title, token });
   };
 };
 
-export default useDeleteBook;
+export default useCreateBook;

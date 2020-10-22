@@ -1,20 +1,21 @@
 import { useMutation, useQueryCache } from "react-query";
 
-import useAccessToken from "./useAccessToken";
+import useAccessToken from "../useAccessToken";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const deleteVideoRequest = async ({ bookId, pageId, videoId, token }) => {
+const createVideo = async ({ bookId, pageId, link, notes, token }) => {
   try {
     const response = await fetch(
-      `${apiUrl}/api/v1/books/${bookId}/pages/${pageId}/videos/${videoId}`,
+      `${apiUrl}/api/v1/books/${bookId}/pages/${pageId}/videos`,
       {
-        method: "DELETE",
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         credentials: "include",
+        body: JSON.stringify({ link, notes }),
       }
     );
 
@@ -28,20 +29,19 @@ const deleteVideoRequest = async ({ bookId, pageId, videoId, token }) => {
   }
 };
 
-const useDeleteVideo = () => {
-  const { token, authError } = useAccessToken() || {};
-
+const useCreateVideo = () => {
+  const { token } = useAccessToken() || {};
   const queryCache = useQueryCache();
 
-  const [mutate] = useMutation(deleteVideoRequest, {
+  const [mutate] = useMutation(createVideo, {
     onSuccess: () => {
       queryCache.invalidateQueries("user");
     },
   });
 
-  return (bookId, pageId, videoId) => {
-    mutate({ bookId, pageId, videoId, token });
+  return (bookId, pageId, link, notes) => {
+    mutate({ bookId, pageId, link, notes, token });
   };
 };
 
-export default useDeleteVideo;
+export default useCreateVideo;

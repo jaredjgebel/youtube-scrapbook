@@ -13,42 +13,34 @@ import {
   Input,
 } from "@chakra-ui/core";
 
-import useEditVideo from "../hooks/useEditVideo";
+import useCreateVideo from "../../hooks/video/useCreateVideo";
 
-const EditVideoModal = ({
-  isOpen,
-  onClose,
-  bookId,
-  pageId,
-  videoId,
-  link,
-  notes,
-}) => {
-  const editVideo = useEditVideo();
+const AddVideoModal = ({ isOpen, onClose, bookId, pageId }) => {
+  const createVideo = useCreateVideo();
 
-  const [linkState, setLink] = useState(link);
+  const [link, setLink] = useState("");
   const handleLinkChange = (event) => setLink(event.target.value);
 
-  const [notesState, setNotes] = useState(notes);
+  const [notes, setNotes] = useState("");
   const handleNotesChange = (event) => setNotes(event.target.value);
 
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit video</ModalHeader>
+        <ModalHeader>Add a video</ModalHeader>
         <ModalCloseButton onClick={onClose} />
-        <form className="Edit-video-form">
+        <form className="add-video-form">
           <ModalBody>
             <Flex
               as={Input}
-              value={linkState}
+              value={link}
               placeholder="Link to video"
               onChange={handleLinkChange}
               marginBottom={1}
             />
             <Textarea
-              value={notesState}
+              value={notes}
               placeholder="Notes"
               onChange={handleNotesChange}
             />
@@ -58,8 +50,7 @@ const EditVideoModal = ({
             <Button
               variantColor="burgandy"
               onClick={() => {
-                setLink(link);
-                setNotes(notes);
+                setLink("");
                 onClose();
               }}
               marginRight={1}
@@ -73,11 +64,11 @@ const EditVideoModal = ({
               marginLeft={1}
               onClick={(e) => {
                 e.preventDefault();
-                editVideo(bookId, pageId, videoId, notesState, linkState);
+                createVideo(bookId, pageId, link, notes);
                 onClose();
               }}
             >
-              Edit
+              Create
             </Button>
           </ModalFooter>
         </form>
@@ -86,4 +77,4 @@ const EditVideoModal = ({
   );
 };
 
-export default EditVideoModal;
+export default AddVideoModal;

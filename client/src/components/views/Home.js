@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/core";
 
 import Books from "./Books";
-import Loading from "../views/Loading";
+import Loading from "../loading/Loading";
 import UserContext from "../contexts/UserContext";
 import useUser from "../hooks/useUser";
 import useAccessToken from "../hooks/useAccessToken";
@@ -11,6 +11,8 @@ const Home = () => {
   const { token, authError } = useAccessToken() || {};
 
   const { data, error, isFetching } = useUser(token);
+
+  if (authError) throw new Error(authError);
 
   return (
     <Flex
