@@ -6,7 +6,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import PrivateRoute from "./auth/PrivateRoute";
 import FrontPage from "./components/views/FrontPage";
 import Home from "./components/views/Home";
-import Profile from "./components/views/Profile";
 import Loading from "./components/views/Loading";
 
 const App = () => {
@@ -25,7 +24,6 @@ const App = () => {
         >
           <Switch>
             <PrivateRoute path="/books" component={Home} />
-            <PrivateRoute path="/profile" component={Profile} />
             <Route path="/" exact component={FrontPage} />
           </Switch>
         </Flex>
