@@ -17,7 +17,7 @@ const videosRouter = require("./routes/videos");
 const errorHelper = require("./middleware/errorHelper");
 
 const app = express();
-const port = process.env.API_PORT || 3000;
+const port = process.env.PORT || 3000;
 const host = "localhost";
 
 const jwtCheck = jwt({
