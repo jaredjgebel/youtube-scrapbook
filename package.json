@@ -1,0 +1,21 @@
+{
+  "name": "youtube-scrapbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "build": "react-scripts build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaredjgebel/youtube-scrapbook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaredjgebel/youtube-scrapbook/issues"
+  },
+  "homepage": "https://github.com/jaredjgebel/youtube-scrapbook#readme"
+}
