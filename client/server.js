@@ -3,7 +3,7 @@ const express = require("express");
 
 const DIST_DIR = path.join(__dirname, "dist");
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(express.static(DIST_DIR));
@@ -13,5 +13,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Listening on port 9000");
+  console.log(`Listening on ${PORT}`);
 });
