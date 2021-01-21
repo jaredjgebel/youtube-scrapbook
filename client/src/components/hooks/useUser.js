@@ -3,7 +3,7 @@ const apiUrl = process.env.REACT_APP_API_URL || "localhost:7000";
 
 const getUserByToken = async (key, { token }) => {
   try {
-    const response = await fetch(`${apiUrl}/api/v1/users`, {
+    const response = await fetch(`${apiUrl}api/v1/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
