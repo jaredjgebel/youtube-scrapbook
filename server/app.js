@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 /* eslint-disable prettier/prettier */
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
 const mongoose = require("mongoose");
 const jwt = require("express-jwt");
 const jwks = require("jwks-rsa");
@@ -19,6 +19,7 @@ const errorHelper = require("./middleware/errorHelper");
 const app = express();
 const port = process.env.PORT || 3000;
 const host = "localhost";
+const DIST_DIR = path.join(__dirname, "../client/build");
 
 const jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
@@ -32,10 +33,10 @@ const jwtCheck = jwt({
   algorithms: ["RS256"],
 });
 
-app.use(logger("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(DIST_DIR));
 mongoose.set("useCreateIndex", true);
 
 app.use(
@@ -52,6 +53,10 @@ app.use("/api/v1", pagesRouter);
 app.use("/api/v1", videosRouter);
 
 app.use(errorHelper);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(DIST_DIR, "index.html"));
+});
 
 const db = mongoose.connection;
 const uri =
