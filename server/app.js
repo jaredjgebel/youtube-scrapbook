@@ -21,6 +21,11 @@ const port = process.env.PORT || 3000;
 const host = "https://youtube-scrapbook.herokuapp.com/";
 const DIST_DIR = path.join(__dirname, "../client/build");
 
+app.use(express.static(DIST_DIR));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(DIST_DIR, "index.html"));
+});
+
 const jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -52,11 +57,6 @@ app.use("/api/v1", pagesRouter);
 app.use("/api/v1", videosRouter);
 
 app.use(errorHelper);
-
-app.use(express.static(DIST_DIR));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(DIST_DIR, "index.html"));
-});
 
 const db = mongoose.connection;
 const uri =
