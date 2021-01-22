@@ -22,9 +22,6 @@ const host = "https://youtube-scrapbook.herokuapp.com/";
 const DIST_DIR = path.join(__dirname, "../client/build");
 
 app.use(express.static(DIST_DIR));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(DIST_DIR, "index.html"));
-});
 
 const jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
@@ -73,6 +70,10 @@ mongoose.connect(uri, {
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function onDatabaseConnectionSuccess() {
   console.log("Database has been successfully connected.");
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(DIST_DIR, "index.html"));
 });
 
 let args;
