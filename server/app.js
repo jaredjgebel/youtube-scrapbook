@@ -17,8 +17,11 @@ const videosRouter = require("./routes/videos");
 const errorHelper = require("./middleware/errorHelper");
 
 const app = express();
-const port = 3000;
-const host = "localhost";
+const port = process.env.NODE_ENV === "production" ? process.env.PORT : 3000;
+const host =
+  process.env.NODE_ENV === "production"
+    ? "youtube-scrapbook.herokuapp.com"
+    : "localhost";
 const DIST_DIR = path.join(__dirname, "../client/build");
 
 app.use(express.static(DIST_DIR));
@@ -40,9 +43,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 mongoose.set("useCreateIndex", true);
 
+const origin =
+  process.env.NODE_ENV === "production"
+    ? "youtube-scrapbook.herokuapp.com"
+    : "localhost";
+
 app.use(
   cors({
-    origin: "localhost:3000",
+    origin,
     credentials: true,
   })
 );
