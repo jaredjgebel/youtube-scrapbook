@@ -18,7 +18,7 @@ const errorHelper = require("./middleware/errorHelper");
 
 const app = express();
 const port = process.env.PORT || 3000;
-const host = "localhost";
+const host = "https://youtube-scrapbook.herokuapp.com/";
 const DIST_DIR = path.join(__dirname, "../client/build");
 
 const jwtCheck = jwt({
@@ -36,12 +36,11 @@ const jwtCheck = jwt({
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(DIST_DIR));
 mongoose.set("useCreateIndex", true);
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://youtube-scrapbook.herokuapp.com/",
     credentials: true,
   })
 );
@@ -54,6 +53,7 @@ app.use("/api/v1", videosRouter);
 
 app.use(errorHelper);
 
+app.use(express.static(DIST_DIR));
 app.get("*", (req, res) => {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
