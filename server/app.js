@@ -17,8 +17,8 @@ const videosRouter = require("./routes/videos");
 const errorHelper = require("./middleware/errorHelper");
 
 const app = express();
-const port = process.env.PORT || 3000;
-const host = "https://youtube-scrapbook.herokuapp.com/";
+const port = 3000;
+const host = "localhost";
 const DIST_DIR = path.join(__dirname, "../client/build");
 
 app.use(express.static(DIST_DIR));
@@ -42,7 +42,7 @@ mongoose.set("useCreateIndex", true);
 
 app.use(
   cors({
-    origin: "https://youtube-scrapbook.herokuapp.com/",
+    origin: "localhost:3000",
     credentials: true,
   })
 );

@@ -2,7 +2,7 @@ import { useMutation, useQueryCache } from "react-query";
 
 import useAccessToken from "../useAccessToken";
 
-const apiUrl = process.env.REACT_APP_API_URL || "localhost:7000";
+const apiUrl = process.env.REACT_APP_API_URL || "localhost:3000";
 
 const createVideo = async ({ bookId, pageId, link, notes, token }) => {
   try {
