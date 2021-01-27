@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL || "localhost:3000";
 
 const getUserByToken = async (key, { token }) => {
   try {

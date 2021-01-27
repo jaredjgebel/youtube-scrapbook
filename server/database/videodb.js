@@ -19,7 +19,6 @@ async function createVideo({ userId, bookId, pageId, link, notes }) {
 async function editVideo({ userId, bookId, pageId, videoId, link, notes }) {
   try {
     const user = await getUser(userId);
-
     const video = user.books.id(bookId).pages.id(pageId).videos.id(videoId);
 
     video.link = link;
