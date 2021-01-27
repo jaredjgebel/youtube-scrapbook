@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const jwt = require("express-jwt");
 const jwks = require("jwks-rsa");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
@@ -38,6 +39,7 @@ const jwtCheck = jwt({
   algorithms: ["RS256"],
 });
 
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
