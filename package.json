@@ -6,9 +6,10 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "cd server/ && node server/app.js",
+    "start": "cd server/ && node server/server.js",
     "build": "cd client/ && npm install && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "heroku local --env server/.env"
   },
   "cacheDirectories": [
     "server/node_modules",
