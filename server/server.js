@@ -39,6 +39,8 @@ const jwtCheck = jwt({
   algorithms: ["RS256"],
 });
 
+console.log("**JWTCHECK**", jwtCheck);
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
