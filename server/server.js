@@ -39,9 +39,7 @@ const jwtCheck = jwt({
   algorithms: ["RS256"],
 });
 
-console.dir("**JWTCHECK**", jwtCheck, {
-  showHidden: true,
-});
+console.log("**JWTCHECK**", process.env.AUTH0_ISSUER);
 
 app.use(morgan("dev"));
 app.use(express.json());
