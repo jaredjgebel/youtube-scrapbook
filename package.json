@@ -6,7 +6,7 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "cd server/ && node server/server.js",
+    "start": "cd server/ && node server.js",
     "build": "cd client/ && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "local": "heroku local --env server/.env"

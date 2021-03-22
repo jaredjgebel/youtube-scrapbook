@@ -39,8 +39,6 @@ const jwtCheck = jwt({
   algorithms: ["RS256"],
 });
 
-console.log("**JWTCHECK**", process.env.AUTH0_ISSUER);
-
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -82,6 +80,10 @@ mongoose.connect(uri, {
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function onDatabaseConnectionSuccess() {
   console.log("Database has been successfully connected.");
+});
+
+app.get("/", (req, res) => {
+  console.log("this ran");
 });
 
 app.get("*", (req, res) => {

@@ -8,6 +8,8 @@ function errorHelper(err, req, res, next) {
   if (err._message) {
     return res.status(400).json({ error: err.errors });
   }
+
+  console.log(req);
   return res.status(500).json({
     status: 500,
     statusText: "Internal Server Error",
