@@ -9,7 +9,6 @@ function errorHelper(err, req, res, next) {
     return res.status(400).json({ error: err.errors });
   }
 
-  console.log(req);
   return res.status(500).json({
     status: 500,
     statusText: "Internal Server Error",
